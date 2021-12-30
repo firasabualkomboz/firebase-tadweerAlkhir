@@ -34,24 +34,32 @@
               <table class="table table-hover">
                 <tr>
                   <th>ID</th>
+                  <th>Image</th>
                   <th>user Name</th>
                   <th>phone</th>
                   <th>Address</th>
                   <th>Email</th>
                   <th>User Type</th>
-                  <th>Donations Count</th>
+                  <th>Items Donated</th>
+                  <th>Completed Tasks</th>
+                  <th>joinDate</th>
+
                   <th>Action</th>
                 </tr>
 
                 @foreach ($users as $key => $user)
                 <tr>
                     <td>{{ $loop->index }}</td>
+                <td><img src="{{ $user['image_url'] ??'' }}" height="60" alt="image user"></td>
+
                     <td>{{ $user['name'] }}</td>
-                    <td>{{ $user['phone'] ?? '' }}</td>
+                    <td>{{ $user['phoneNumber'] ?? '' }}</td>
                     <td>{{ $user['address'] ?? '' }}</td>
                     <td>{{ $user['email'] ?? '' }}</td>
                     <td>{{ $user['type']  ?? ''}}</td>
-                    <td><span class="badge">{{ $user['count_donations'] ?? ''}}</span></td>
+                    <td><span class="badge">{{ $user['itemsDonated'] ?? ''}}</span></td>
+                    <td><span class="">{{ $user['completedTasks'] ?? ''}}</span></td>
+                    <td><span class="">{{ $user['joinDate'] ?? ''}}</span></td>
 
                 <td>
                 {{-- <a class="btn btn-sm btn-warning" href=""><i class="fa fa-edit"> Edit </i></a> - --}}

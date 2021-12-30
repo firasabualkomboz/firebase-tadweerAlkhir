@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Database;
+use Kreait\Firebase\Firestore;
 
 class UserController extends Controller
 {
-    public function __construct(Database $database)
+    public function __construct(Database $database , Firestore $firestore)
     {
+        $this->firestore = $firestore;
         $this->database = $database;
         $this->database_table = 'users';
     }
@@ -21,7 +23,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->database->getReference($this->database_table)->getValue();
+        // $users = $this->database->getReference($this->database_table)->getValue();
+        $users = $this->firestore->database()->collection('users')->documents();
         return view('admin.users.index' , [
             'users' => $users,
         ]);

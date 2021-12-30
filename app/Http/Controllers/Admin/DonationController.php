@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Database;
+use Kreait\Firebase\Firestore;
 
 class DonationController extends Controller
 {
-    public function __construct(Database $database)
+    public function __construct(Database $database , Firestore $firestore)
     {
+        $this->firestore = $firestore;
         $this->database = $database;
         $this->database_table = 'donations';
     }
@@ -21,7 +23,8 @@ class DonationController extends Controller
      */
     public function index()
     {
-        $donations = $this->database->getReference($this->database_table)->getValue();
+        // $donations = $this->database->getReference($this->database_table)->getValue();
+        $donations = $this->firestore->database()->collection('donations')->documents();
         return view('admin.donations.index',[
             'donations' => $donations,
         ]);
@@ -46,21 +49,58 @@ class DonationController extends Controller
      */
     public function store(Request $request)
     {
-        $data = [
+        // $data = [
+        //     'name'          => $request->name,
+        //     'description'   => $request->description,
+        //     'address'       => $request->address,
+        //     'data'          => $request->data,
+        //     'status'        => $request->status,
+        //     ];
+        //     $dataRef  = $this->database->getReference($this->database_table)->push($data);
+        //     if($dataRef){
+        //         toastr()->success('تم إضافة التبرع بنجاح');
+        //         return redirect()->route('donations.index');
+
+        //     }else{
+        //     return "ok false";
+        //     }
+
+        if ($request->doc_id == null) {
+            // Uplode Data
+            $request->validate([
+              'name' => 'required',
+              'imageUrl' => 'required',
+             ]);
+            $stuRef = $this->firestore->database()->collection('donations')->newDocument();
+            $stuRef->set([
+              'imageUrl' => $request->imageUrl,
             'name'          => $request->name,
             'description'   => $request->description,
             'address'       => $request->address,
             'data'          => $request->data,
             'status'        => $request->status,
-            ];
-            $dataRef  = $this->database->getReference($this->database_table)->push($data);
-            if($dataRef){
-                toastr()->success('تم إضافة التبرع بنجاح');
+            ]);
+                toastr()->success('تم إضافة الفئة بنجاح');
                 return redirect()->route('donations.index');
+          }
+          else {
 
-            }else{
-            return "ok false";
-            }
+            $student = $this->firestore->database()->collection('donations')->document($request->doc_id)->snapshot();
+
+            $name = $student->data()['name'];
+            $imageUrl = $student->data()['imageUrl'];
+            $description = $student->data()['description'];
+            $address = $student->data()['address'];
+            $data = $student->data()['data'];
+            $status = $student->data()['status'];
+
+
+            $data = sprintf("Name : %s %s \n and imageUrl : %s", $name ,$imageUrl , $description ,$address ,$data , $status );
+
+            toastr()->success('تم إضافة الفئة بنجاح');
+            return back()->withInput();
+          }
+
     }
 
     /**
@@ -105,13 +145,7 @@ class DonationController extends Controller
      */
     public function destroy($id)
     {
-        $key = $id;
-        $dataRef_delete  = $this->database->getReference($this->database_table .'/'. $key)->remove();
-        if($dataRef_delete){
-        toastr()->error('تم حذف التبرع بنجاح');
-        return redirect()->route('donations.index');
-        }else{
-        return "no false";
-        }
+        $this->firestore->database()->collection('donations')->document($id)->delete();
+        return back();
     }
 }

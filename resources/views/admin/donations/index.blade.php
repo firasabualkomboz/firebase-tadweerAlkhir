@@ -49,13 +49,13 @@
                     <td>{{ $donation['name'] }}</td>
                     <td>{{ $donation['description'] ??'' }}</td>
                     <td>{{ $donation['address'] ?? '' }}</td>
-                    <td>{{ $donation['data'] ?? '' }}</td>
+                    <td>{{ $donation['date'] ?? '' }}</td>
                     <td>{{ $donation['status'] ?? '' }}</td>
-                    <td><img src="" alt="image donation"></td>
+                    <td><img src="{{ $donation['imageUrl'] ??'' }}" height="60" alt="image donation"></td>
 
                 <td>
                 {{-- <a class="btn btn-sm btn-warning" href=""><i class="fa fa-edit"> Edit </i></a> - --}}
-                <form action="{{ url('delete-donation/'.$key ) }}" method="POST">
+                <form action="{{ url('delete-donation/' .$donation->id() )  }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>

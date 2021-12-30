@@ -169,13 +169,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $key = $id;
-        $dataRef_delete  = $this->database->getReference($this->database_table .'/'. $key)->remove();
-        if($dataRef_delete){
-        toastr()->error('تم حذف الفئة بنجاح');
-        return redirect()->route('categories.index');
-        }else{
-        return "no false";
-        }
+        // $key = $id;
+        // $dataRef_delete  = $this->database->getReference($this->database_table .'/'. $key)->remove();
+        // if($dataRef_delete){
+        // toastr()->error('تم حذف الفئة بنجاح');
+        // return redirect()->route('categories.index');
+        // }else{
+        // return "no false";
+        // }
+        $this->firestore->database()->collection('categories')->document($id)->delete();
+        return back();
+
     }
 }
