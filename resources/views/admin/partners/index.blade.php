@@ -42,16 +42,19 @@
                 @foreach ($partners as $key => $partner)
                 <tr>
                     <td>{{ $loop->index }}</td>
-                    <td>{{ $partner['name'] }}</td>
+                    <td>{{ $partner['name'] ?? $partner['description'] }}</td>
                     <td><img src="" alt="image partner"></td>
 
                 <td>
                 {{-- <a class="btn btn-sm btn-warning" href=""><i class="fa fa-edit"> Edit </i></a> - --}}
-                <form action="{{ url('delete-partner/'.$key ) }}" method="POST">
+
+
+                <form action="{{ url('delete-partner/' .$partner->id() )  }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>
                 </form>
+
             </td>
                 </tr>
 

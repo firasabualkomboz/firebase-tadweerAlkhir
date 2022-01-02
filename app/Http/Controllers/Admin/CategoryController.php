@@ -54,12 +54,12 @@ class CategoryController extends Controller
             // Uplode Data
             $request->validate([
               'name' => 'required',
-              'imageUrl' => 'required',
+            //   'imageUrl' => 'required',
              ]);
             $stuRef = $this->firestore->database()->collection('categories')->newDocument();
             $stuRef->set([
               'name' => $request->name,
-              'imageUrl' => $request->imageUrl,
+            //   'imageUrl' => $request->imageUrl,
             ]);
                 toastr()->success('تم إضافة الفئة بنجاح');
                 return redirect()->route('categories.index');
@@ -69,9 +69,9 @@ class CategoryController extends Controller
             $student = $this->firestore->database()->collection('categories')->document($request->doc_id)->snapshot();
 
             $name = $student->data()['name'];
-            $imageUrl = $student->data()['imageUrl'];
+            // $imageUrl = $student->data()['imageUrl'];
 
-            $data = sprintf("Name : %s %s \n and imageUrl : %s", $name ,$imageUrl);
+            $data = sprintf("Name : %s %s \n and imageUrl : %s", $name);
 
             toastr()->success('تم إضافة الفئة بنجاح');
             return back()->withInput();

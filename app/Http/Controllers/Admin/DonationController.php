@@ -38,7 +38,6 @@ class DonationController extends Controller
     public function create()
     {
         return view('admin.donations.create');
-
     }
 
     /**
@@ -69,11 +68,11 @@ class DonationController extends Controller
             // Uplode Data
             $request->validate([
               'name' => 'required',
-              'imageUrl' => 'required',
+            //   'imageUrl' => 'required',
              ]);
             $stuRef = $this->firestore->database()->collection('donations')->newDocument();
             $stuRef->set([
-              'imageUrl' => $request->imageUrl,
+            // 'imageUrl' => $request->imageUrl,
             'name'          => $request->name,
             'description'   => $request->description,
             'address'       => $request->address,
@@ -88,14 +87,14 @@ class DonationController extends Controller
             $student = $this->firestore->database()->collection('donations')->document($request->doc_id)->snapshot();
 
             $name = $student->data()['name'];
-            $imageUrl = $student->data()['imageUrl'];
+            // $imageUrl = $student->data()['imageUrl'];
             $description = $student->data()['description'];
             $address = $student->data()['address'];
             $data = $student->data()['data'];
             $status = $student->data()['status'];
 
 
-            $data = sprintf("Name : %s %s \n and imageUrl : %s", $name ,$imageUrl , $description ,$address ,$data , $status );
+            $data = sprintf("Name : %s %s \n and imageUrl : %s", $name  , $description ,$address ,$data , $status );
 
             toastr()->success('تم إضافة الفئة بنجاح');
             return back()->withInput();
