@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Database;
+use Kreait\Firebase\Firestore;
 
 class PartnerController extends Controller
 {
 
-    public function __construct(Database $database)
+    public function __construct(Database $database , Firestore $firestore)
     {
+        $this->firestore = $firestore;
         $this->database = $database;
         $this->database_table = 'partners';
     }
@@ -22,7 +24,9 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        $partners = $this->database->getReference($this->database_table)->getValue();
+        // $partners = $this->database->getReference($this->database_table)->getValue();
+        $partners = $this->firestore->database()->collection('partners')->documents();
+
         return view('admin.partners.index' , [
             'partners' => $partners,
         ]);
@@ -100,13 +104,7 @@ class PartnerController extends Controller
      */
     public function destroy($id)
     {
-        $key = $id;
-        $dataRef_delete  = $this->database->getReference($this->database_table .'/'. $key)->remove();
-        if($dataRef_delete){
-        toastr()->error('تم حذف الشريك بنجاح');
-        return redirect()->route('partners.index');
-        }else{
-        return "no false";
-        }
+        $this->firestore->database()->collection('partners')->document($id)->delete();
+        return back();
     }
 }
