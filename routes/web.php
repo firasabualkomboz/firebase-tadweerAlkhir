@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\DonationController;
-use App\Http\Controllers\Admin\PartnerController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\OrdersController;
-use App\Http\Controllers\DriversController;
-use App\Http\Controllers\DonationsController;
+// use App\Http\Controllers\Admin\CategoryController;
+// use App\Http\Controllers\Admin\DonationController;
+// use App\Http\Controllers\Admin\PartnerController;
+// use App\Http\Controllers\Admin\UserController;
+// use App\Http\Controllers\OrdersController;
+// use App\Http\Controllers\DriversController;
+// use App\Http\Controllers\DonationsController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,36 +20,60 @@ use App\Http\Controllers\DonationsController;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.pages.index');
-})->name('home');
+// Auth::routes();
+Auth::routes(['register' => false]);
 
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('donations', [DonationsController::class, 'show'])->name('donations');
-Route::get('orders', [OrdersController::class, 'show'])->name('orders');
-Route::get('drivers', [DriversController::class, 'show'])->name('drivers');
-
-// categories
-Route::resource('categories', CategoryController::class);
-Route::delete('delete-category/{id}',[ CategoryController::class,'destroy']);
-// donations
-Route::resource('donations', DonationController::class);
-Route::delete('delete-donation/{id}',[ DonationController::class,'destroy']);
-// partners
-Route::resource('partners', PartnerController::class);
-Route::delete('delete-partner/{id}',[ PartnerController::class,'destroy']);
-
-// users
-Route::resource('users', UserController::class);
-Route::delete('delete-user/{id}',[ UserController::class,'destroy']);
-
-
-// test
-
-Route::get('test', function () {
+Route::get('/',function(){
+  return view('auth.login');
 
 });
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/', function () {
+//     return view('admin.pages.index');
+// })->name('home')->middleware('auth');
+
+
+
+Route::group([], function (){
+
+    Route::prefix('admin')
+        ->middleware('auth')
+        // ->name('admin.')
+        ->group(function (){
+
+
+            // categories
+            Route::resource('/categories',\Admin\CategoryController::class);
+            Route::delete('delete-category/{id}',[ CategoryController::class,'destroy']);
+
+
+            // donations
+            Route::resource('donations', \Admin\DonationController::class);
+            Route::delete('delete-donation/{id}',[ DonationController::class,'destroy']);
+
+            // partners
+            Route::resource('partners', \Admin\PartnerController::class);
+            Route::delete('delete-partner/{id}',[ PartnerController::class,'destroy']);
+
+            // users
+            Route::resource('users', \Admin\UserController::class);
+            Route::delete('delete-user/{id}',[ UserController::class,'destroy']);
+
+
+
+        });
+
+});
+
+
+
+
+
+
+// Route::get('donations', [DonationsController::class, 'show'])->name('donations')->middleware('auth');
+// Route::get('orders', [OrdersController::class, 'show'])->name('orders')->middleware('auth');
+// Route::get('drivers', [DriversController::class, 'show'])->name('drivers')->middleware('auth');
+

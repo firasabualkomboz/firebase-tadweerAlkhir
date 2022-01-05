@@ -38,8 +38,10 @@
                   <th>Description</th>
                   <th>Address</th>
                   <th>Date</th>
+                  <th>pickupDateTime</th>
                   <th>Status</th>
                   <th>Image</th>
+                  <th>Video</th>
                   <th>Action</th>
                 </tr>
 
@@ -48,12 +50,15 @@
                     <td>{{ $loop->index }}</td>
                     <td>{{ $donation['name'] }}</td>
                     <td>{{ $donation['description'] ??'' }}</td>
-                    <td>{{ $donation['pickupAddress'] ?? '' }}</td>
+                    <td >{{ $donation['pickupAddress'] ?? '' }}</td>
                     <td>{{ $donation['date'] ?? '' }}</td>
+                    <td>{{ $donation['pickupDateTime'] ?? '' }}</td>
                     {{-- <td>{!! date('d-m-Y' , strtotime($donation['date'])) ?? '' !!}</td> --}}
 
                     <td><span class="btn btn-sm btn-warning">{{ $donation['status'] ?? '' }}</span></td>
                     <td><img src="{{ $donation['imageUrl'] ??'' }}" height="60" alt="image donation"></td>
+                    <td>    <iframe src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}" width="100" height="100"></iframe>
+                    </td>
 
                 <td>
                 {{-- <a class="btn btn-sm btn-warning" href=""><i class="fa fa-edit"> Edit </i></a> - --}}
