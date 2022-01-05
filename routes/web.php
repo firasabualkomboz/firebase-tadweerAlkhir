@@ -48,3 +48,7 @@ Route::delete('delete-user/{id}',[ UserController::class,'destroy']);
 Route::get('test', function () {
 
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

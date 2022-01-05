@@ -48,9 +48,11 @@
                     <td>{{ $loop->index }}</td>
                     <td>{{ $donation['name'] }}</td>
                     <td>{{ $donation['description'] ??'' }}</td>
-                    <td>{{ $donation['address'] ?? '' }}</td>
+                    <td>{{ $donation['pickupAddress'] ?? '' }}</td>
                     <td>{{ $donation['date'] ?? '' }}</td>
-                    <td>{{ $donation['status'] ?? '' }}</td>
+                    {{-- <td>{!! date('d-m-Y' , strtotime($donation['date'])) ?? '' !!}</td> --}}
+
+                    <td><span class="btn btn-sm btn-warning">{{ $donation['status'] ?? '' }}</span></td>
                     <td><img src="{{ $donation['imageUrl'] ??'' }}" height="60" alt="image donation"></td>
 
                 <td>
