@@ -47,12 +47,11 @@ Route::group([], function (){
 
             // categories
             Route::resource('/categories',\Admin\CategoryController::class);
-            Route::delete('delete-category/{id}',[ CategoryController::class,'destroy']);
-
+            // Route::delete('delete-category/{id}','\Admin\CategoryController@destroy');
 
             // donations
             Route::resource('donations', \Admin\DonationController::class);
-            Route::delete('delete-donation/{id}',[ DonationController::class,'destroy']);
+            // Route::delete('delete-donation/{id}',\Admin\DonationController::class  , 'destroy');
 
             // partners
             Route::resource('partners', \Admin\PartnerController::class);

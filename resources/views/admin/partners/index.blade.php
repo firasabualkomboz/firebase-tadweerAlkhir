@@ -34,7 +34,7 @@
               <table class="table table-hover">
                 <tr>
                   <th>ID</th>
-                  <th>partner Name</th>
+                  <th>Name</th>
                   <th>Image</th>
                   <th>Action</th>
                 </tr>
@@ -43,13 +43,12 @@
                 <tr>
                     <td>{{ $loop->index }}</td>
                     <td>{{ $partner['name'] ?? $partner['description'] }}</td>
-                    <td><img src="" alt="image partner"></td>
+                    <td><img height="60" src="{{ $partner['image']  ?? ''}}" alt="image partner"></td>
 
                 <td>
                 {{-- <a class="btn btn-sm btn-warning" href=""><i class="fa fa-edit"> Edit </i></a> - --}}
 
-
-                <form action="{{ url('delete-partner/' .$partner->id() )  }}" method="POST">
+                <form action="{{ url('delete-category/' .$partner->id() )  }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>

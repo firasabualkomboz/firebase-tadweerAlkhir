@@ -50,16 +50,20 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-        $data = [
-        'name' => $request->name,
-        ];
-        $dataRef  = $this->database->getReference($this->database_table)->push($data);
-        if($dataRef){
+
+        if($request->doc_id == null){
+            $request->validate([
+            'name' => 'required',
+            ]);
+
+            $partRef = $this->firestore->database()->collection('partners')->newDocument();
+            $partRef->set([
+            'name' => $request->name,
+            ]);
             toastr()->success('تم إضافة شريك جديد بنجاح');
             return redirect()->route('partners.index');
-        }else{
-        return "ok false";
         }
+
     }
 
     /**

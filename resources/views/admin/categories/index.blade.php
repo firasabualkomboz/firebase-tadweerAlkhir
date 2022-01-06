@@ -46,7 +46,7 @@
                     <td><img src="{{ $category['imageUrl'] ??'' }}" height="60" alt="image category"></td>
                 <td>
                 {{-- <a class="btn btn-sm btn-warning" href="{{ route('categories.edit' , $key) }}"><i class="fa fa-edit"> Edit </i></a> - --}}
-                    <form action="{{ url('delete-category/' .$category->id() )  }}" method="POST">
+                    <form action="{{ url('admin/categories/' .$category->id() )  }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>
