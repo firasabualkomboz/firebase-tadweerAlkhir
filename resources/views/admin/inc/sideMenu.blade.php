@@ -37,6 +37,18 @@
               </a>
             </li>
 
+            <li>
+              <a href="{{ route('users.index') }}">
+                <i class="fa fa-user"></i> <span>Gallery photos</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="{{ route('videos.index') }}">
+                <i class="fa fa-user"></i> <span>Gallery Videos</span>
+              </a>
+            </li>
+
           </ul>
         </section>
       </aside>

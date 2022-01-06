@@ -4,12 +4,16 @@
 
 @section('content')
 
+
+
+
+
 <div class="content-wrapper">
     <section class="content-header">
-      <h1>All Donations</h1>
+      <h1>All Partners</h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">الفئات</li>
+        <li class="active">users</li>
       </ol>
     </section>
 
@@ -19,7 +23,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"> إضافة فئة جديدة </h3>
+              <h3 class="box-title"> Add new user </h3>
               <div class="box-tools">
                 <div class="input-group">
                   <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
@@ -34,9 +38,9 @@
           </div>
 
 
-          <form class="" action="{{ route('categories.store') }}" method="post">
+          <form class="" action="{{ route('users.store') }}" method="post">
             @csrf
-            @include('admin.categories._form')
+            @include('admin.users._form')
             </form>
 
 

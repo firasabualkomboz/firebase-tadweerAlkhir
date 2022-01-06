@@ -14,7 +14,7 @@
 
     <!-- Main content -->
     <section class="content">
-        <a class="btn btn-primary btn-sm" href="{{ route('partners.create') }}">add new Partner</a>
+        <a style="margin-bottom: 5px;" class="btn btn-primary btn-sm" href="{{ route('partners.create') }}">Add New Partner</a>
 
       <div class="row">
         <div class="col-xs-12">
@@ -39,23 +39,58 @@
                   <th>Action</th>
                 </tr>
 
-                @foreach ($partners as $key => $partner)
-                <tr>
-                    <td>{{ $loop->index }}</td>
-                    <td>{{ $partner['name'] ?? $partner['description'] }}</td>
-                    <td><img height="60" src="{{ $partner['image']  ?? ''}}" alt="image partner"></td>
+@foreach ($partners as $key => $partner)
+<tr>
 
-                <td>
-                {{-- <a class="btn btn-sm btn-warning" href=""><i class="fa fa-edit"> Edit </i></a> - --}}
+    <td>{{ $loop->index }}</td>
+    <td>{{ $partner['name'] ?? $partner['description'] }}</td>
+    <td><img height="60" src="{{ $partner['image']  ?? ''}}" alt="image partner"></td>
 
-                <form action="{{ url('delete-category/' .$partner->id() )  }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>
-                </form>
+    <td>
+<button class="btn btn-sm btn-warning rounded-0" type="button" data-toggle="modal" data-target="#update{{ $partner->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">&#9998;</button>
 
+<form style="margin-top: 10px" action="{{ Url('admin/partners/' .$partner->id() )  }}" method="POST">
+@csrf
+@method('DELETE')
+<button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> </i></button>
+</form>
             </td>
                 </tr>
+
+
+
+<!-- Update -->
+
+<div class="modal fade bd-example-modal-lg" id="update{{ $partner->id() }}"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title">Update Partner</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+
+    <div class="modal-body pl-4">
+
+    {!! Form::model($partner->data(), ['method'=>'PATCH', 'action'=> ['Admin\PartnerController@update', $partner->id()] ]) !!}
+    <div class="form-group">
+    {!! Form::label('Name', 'Description') !!}
+    {!! Form::text('description', null, ['class'=>'form-control'])!!}
+    </div>
+
+    </div>
+
+    <div class="modal-footer">
+    {!! Form::submit('Save changes', ['class'=>'btn btn-success']) !!}
+    {!! Form::close() !!}
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+    </div>
+    </div>
+    </div>
+
+
 
                 @endforeach
 

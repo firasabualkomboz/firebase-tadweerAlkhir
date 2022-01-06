@@ -7,15 +7,16 @@ use Illuminate\Http\Request;
 use Kreait\Firebase\Database;
 use Kreait\Firebase\Firestore;
 
-class PartnerController extends Controller
+class VideoController extends Controller
 {
-
     public function __construct(Database $database , Firestore $firestore)
     {
-        $this->firestore = $firestore;
+
         $this->database = $database;
-        $this->database_table = 'partners';
+        $this->firestore = $firestore;
+        $this->database_table = 'galleryVideos';
     }
+
 
     /**
      * Display a listing of the resource.
@@ -24,11 +25,10 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        // $partners = $this->database->getReference($this->database_table)->getValue();
-        $partners = $this->firestore->database()->collection('partners')->documents();
+        $videos = $this->firestore->database()->collection('galleryVideos')->documents();
 
-        return view('admin.partners.index' , [
-            'partners' => $partners,
+        return view('admin.videos.index' , [
+            'videos' => $videos,
         ]);
     }
 
@@ -39,7 +39,7 @@ class PartnerController extends Controller
      */
     public function create()
     {
-        return view('admin.partners.create');
+        //
     }
 
     /**
@@ -50,23 +50,7 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-
-        if($request->doc_id == null){
-
-            $request->validate([
-            'description' => 'required',
-            'image'       => 'required',
-            ]);
-
-            $partRef = $this->firestore->database()->collection('partners')->newDocument();
-            $partRef->set([
-            'description' => $request->description,
-            'image'       => $request->image
-            ]);
-            toastr()->success('تم إضافة شريك جديد بنجاح');
-            return redirect()->route('partners.index');
-        }
-
+        //
     }
 
     /**
@@ -88,9 +72,7 @@ class PartnerController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.partners.edit' ,[
-            'id' => $id
-        ]);
+        //
     }
 
     /**
@@ -102,12 +84,7 @@ class PartnerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $partner = $this->firestore->database()->collection('partners')->document($id)
-        ->update([
-         ['path' => 'description', 'value' => $request->description],
-        ]);
-        toastr()->success('تم تحديث بيانات الشريك بنجاح');
-        return back();
+        //
     }
 
     /**
@@ -118,8 +95,6 @@ class PartnerController extends Controller
      */
     public function destroy($id)
     {
-        $this->firestore->database()->collection('partners')->document($id)->delete();
-        toastr()->error('تم حذف الشريك بنجاح');
-        return back();
+        //
     }
 }

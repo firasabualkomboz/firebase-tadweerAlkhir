@@ -128,16 +128,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $key = $id;
-        $edit_data = $this->database->getReference($this->database_table)->getChild($key)->getValue();
-        if($edit_data){
-            return view('admin.categories.edit',[
-                'key' => $key,
-                'edit_data' => $edit_data,
-            ]);
-        }else{
-            toastr()->error('يوجد خطأ في المعرف');
-        }
+        return view('admin.categories.edit' ,[
+            'id' => $id
+        ]);
     }
 
     /**
@@ -149,17 +142,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $key = $id;
-        $update_data = [
-        'name' => $request->name,
-        ];
-        $dataRef  = $this->database->getReference($this->database_table .'/'. $key)->update($update_data);
-        if($dataRef){
-            toastr()->success('تم تحديث الفئة بنجاح');
-            return redirect()->route('categories.index');
-        }else{
-        return "no false";
-        }
+        $category = $this->firestore->database()->collection('categories')->document($id)
+        ->update([
+         ['path' => 'name', 'value' => $request->name],
+        ]);
+        toastr()->success('تم تحديث الفئة بنجاح');
+        return back();
+
     }
 
     /**
@@ -173,6 +162,5 @@ class CategoryController extends Controller
         $this->firestore->database()->collection('categories')->document($id)->delete();
         toastr()->error('تم حذف الفئة بنجاح');
         return back();
-
     }
 }

@@ -47,7 +47,6 @@ Route::group([], function (){
 
             // categories
             Route::resource('/categories',\Admin\CategoryController::class);
-            // Route::delete('delete-category/{id}','\Admin\CategoryController@destroy');
 
             // donations
             Route::resource('donations', \Admin\DonationController::class);
@@ -55,17 +54,19 @@ Route::group([], function (){
 
             // partners
             Route::resource('partners', \Admin\PartnerController::class);
-            Route::delete('delete-partner/{id}',[ PartnerController::class,'destroy']);
 
             // users
             Route::resource('users', \Admin\UserController::class);
             Route::delete('delete-user/{id}',[ UserController::class,'destroy']);
 
+            // videos
+            Route::resource('videos', \Admin\VideoController::class);
 
 
         });
 
 });
+
 
 
 
