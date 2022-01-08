@@ -145,6 +145,7 @@ class DonationController extends Controller
     public function destroy($id)
     {
         $this->firestore->database()->collection('donations')->document($id)->delete();
+        toastr()->error('تم حذف التبرع بنجاح');
         return back();
     }
 }

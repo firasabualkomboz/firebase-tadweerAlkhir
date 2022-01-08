@@ -62,13 +62,45 @@
 
                 <td>
                 {{-- <a class="btn btn-sm btn-warning" href=""><i class="fa fa-edit"> Edit </i></a> - --}}
-                <form action="{{ url('delete-donation/' .$donation->id() )  }}" method="POST">
+                {{-- <form id="my-form" action="{{ url('admin/donations/' .$donation->id() )  }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>
-                </form>
+                    <button id="btn" type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>
+                </form> --}}
+                <button class="btn btn-sm rounded-0 ml-2 btn-danger" type="button" data-toggle="modal" data-target="#delete{{ $donation->id() }}" data-toggle="tooltip" data-placement="top" title="Delete">Delete</button>
+
+
             </td>
                 </tr>
+
+
+                <!-- Delete Modal -->
+<div class="modal fade" id="delete{{ $donation->id() }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+    هل أنت متأكد من عملية الحذف ؟
+    </div>
+    <div class="modal-footer">
+
+        <form id="my-form" action="{{ url('admin/donations/' .$donation->id() )  }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button id="btn" type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>
+        </form>
+
+    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+
+    </div>
+    </div>
+    </div>
+    </div>
 
                 @endforeach
 
@@ -79,5 +111,6 @@
       </div>
     </section>
   </div>
+
 
 @endsection

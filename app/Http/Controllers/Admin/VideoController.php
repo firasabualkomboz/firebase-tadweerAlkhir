@@ -95,6 +95,8 @@ class VideoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->firestore->database()->collection('galleryVideos')->document($id)->delete();
+        toastr()->error('تم حذف الفيديو من المعرض بنجاح');
+        return back();
     }
 }

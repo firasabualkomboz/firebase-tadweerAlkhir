@@ -49,12 +49,13 @@
 
 
 <button class="btn btn-sm btn-warning rounded-0" type="button" data-toggle="modal" data-target="#update{{ $category->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">&#9998;</button>
+<button class="btn btn-sm btn-danger rounded-0" type="button" data-toggle="modal" data-target="#delete{{ $category->id() }}" data-toggle="tooltip" data-placement="left" title="Edit"> <i class="fa fa-trash"></i></button>
 
-<form style="margin-top: 10px" action="{{ Url('admin/categories/' .$category->id() )  }}" method="POST">
+{{-- <form style="margin-top: 10px" action="{{ Url('admin/categories/' .$category->id() )  }}" method="POST">
 @csrf
 @method('DELETE')
 <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> </i></button>
-</form>
+</form> --}}
 
                 </td>
                 </tr>
@@ -92,6 +93,35 @@
 </div>
 </div>
 
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="delete{{ $category->id() }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+هل أنت متأكد من عملية الحذف ؟
+</div>
+<div class="modal-footer">
+
+<form style="margin-top: 10px" action="{{ Url('admin/categories/' .$category->id() )  }}" method="POST">
+@csrf
+@method('DELETE')
+<button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>
+</form>
+
+<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+
+</div>
+</div>
+</div>
+</div>
 
 
                 @endforeach
