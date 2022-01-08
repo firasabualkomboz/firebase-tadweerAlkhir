@@ -38,14 +38,20 @@
             </li>
 
             <li>
-              <a href="{{ route('users.index') }}">
-                <i class="fa fa-user"></i> <span>Gallery photos</span>
+              <a href="{{ route('points.index') }}">
+                <i class="fa fa-user"></i> <span>Points</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="{{ route('photos.index') }}">
+                <i class="fa fa-photo"></i> <span>Gallery photos</span>
               </a>
             </li>
 
             <li>
               <a href="{{ route('videos.index') }}">
-                <i class="fa fa-user"></i> <span>Gallery Videos</span>
+                <i class="fa fa-camera"></i> <span>Gallery Videos</span>
               </a>
             </li>
 

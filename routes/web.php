@@ -59,6 +59,12 @@ Route::group([], function (){
             Route::resource('users', \Admin\UserController::class);
             Route::delete('delete-user/{id}',[ UserController::class,'destroy']);
 
+            // points
+            Route::resource('points', \Admin\PointController::class);
+
+            // photos
+            Route::resource('photos', \Admin\PhotoController::class);
+
             // videos
             Route::resource('videos', \Admin\VideoController::class);
 
