@@ -16,6 +16,7 @@
     <section class="content">
         {{-- <a class="btn btn-primary btn-sm" href="{{ route('donations.create') }}">Add New Donation</a> --}}
 
+
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -52,55 +53,103 @@
                     <td>{{ $donation['description'] ??'' }}</td>
                     <td >{{ $donation['pickupAddress'] ?? '' }}</td>
                     <td>{{ $donation['date'] ?? '' }}</td>
-                    <td>{{ $donation['pickupDateTime'] ?? '' }}</td>
+                    <td> {{ $donation['pickupDateTime'] ?? '' }}</td>
                     {{-- <td>{!! date('d-m-Y' , strtotime($donation['date'])) ?? '' !!}</td> --}}
 
                     <td><span class="btn btn-sm btn-warning">{{ $donation['status'] ?? '' }}</span></td>
                     <td><img src="{{ $donation['imageUrl'] ??'' }}" height="60" alt="image donation"></td>
-                    <td>    <iframe src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}" width="100" height="100"></iframe>
+                    {{-- <td>    <iframe src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}" width="100" height="100"></iframe> --}}
                     </td>
 
                 <td>
-                {{-- <a class="btn btn-sm btn-warning" href=""><i class="fa fa-edit"> Edit </i></a> - --}}
-                {{-- <form id="my-form" action="{{ url('admin/donations/' .$donation->id() )  }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button id="btn" type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>
-                </form> --}}
-                <button class="btn btn-sm rounded-0 ml-2 btn-danger" type="button" data-toggle="modal" data-target="#delete{{ $donation->id() }}" data-toggle="tooltip" data-placement="top" title="Delete">Delete</button>
+    
+                <button class="btn btn-sm rounded-0 ml-2 btn-warning" type="button" data-toggle="modal" data-target="#update{{ $donation->id() }}" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-sm rounded-0 ml-2 btn-danger" type="button" data-toggle="modal" data-target="#delete{{ $donation->id() }}" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
 
 
             </td>
                 </tr>
 
 
-                <!-- Delete Modal -->
+
+
+
+<!-- Update -->
+
+<div class="modal fade bd-example-modal-lg" id="update{{ $donation->id() }}"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">تعديل على التبرع</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+
+<div class="modal-body pl-4">
+
+{!! Form::model($donation->data(), ['method'=>'PATCH', 'action'=> ['Admin\DonationController@update', $donation->id()] ]) !!}
+<div class="form-group">
+{!! Form::label('Name', 'الأسم') !!}
+{!! Form::text('name', null, ['class'=>'form-control'])!!}
+</div>
+
+<div class="form-group">
+{!! Form::label('Name', 'الموقع الجغرافي') !!}
+{!! Form::text('pickupAddress', null, ['class'=>'form-control'])!!}
+</div>
+{!! Form::label('Name', 'حالة التبرع') !!}
+
+<div class="form-group form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="status" id="inlineRadio3" value="Awaiting Pickup">
+    <label class="form-check-label" for="inlineRadio3">قيد التسليم</label>
+
+    <input class="form-check-input" type="radio" name="status" id="inlineRadio2" value="delivered">
+    <label class="form-check-label" for="inlineRadio2">تم التسليم</label>
+  </div>
+</div>
+
+
+
+<div class="modal-footer">
+{!! Form::submit('تحديث', ['class'=>'btn btn-success']) !!}
+{!! Form::close() !!}
+<button type="button" class="btn btn-danger" data-dismiss="modal">تراجع</button>
+</div>
+</div>
+</div>
+</div>
+
+{{-- end update  --}}
+
+<!-- Delete Modal -->
 <div class="modal fade" id="delete{{ $donation->id() }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-    <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-    </button>
-    </div>
-    <div class="modal-body">
-    هل أنت متأكد من عملية الحذف ؟
-    </div>
-    <div class="modal-footer">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+هل أنت متأكد من عملية الحذف ؟
+</div>
+<div class="modal-footer">
 
-        <form id="my-form" action="{{ url('admin/donations/' .$donation->id() )  }}" method="POST">
-            @csrf
-            @method('DELETE')
-            <button id="btn" type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>
-        </form>
+<form id="my-form" action="{{ url('admin/donations/' .$donation->id() )  }}" method="POST">
+@csrf
+@method('DELETE')
+<button id="btn" type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>
+</form>
 
-    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
 
-    </div>
-    </div>
-    </div>
-    </div>
+</div>
+</div>
+</div>
+</div>
+{{-- end delete --}}
 
                 @endforeach
 

@@ -24,7 +24,6 @@
               </a>
             </li>
 
-
             <li>
               <a href="{{ route('partners.index') }}">
                 <i class="fa fa-files-o"></i> <span>Partners</span>

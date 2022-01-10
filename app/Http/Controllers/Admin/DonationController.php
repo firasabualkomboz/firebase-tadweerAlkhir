@@ -133,7 +133,14 @@ class DonationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $donation = $this->firestore->database()->collection('donations')->document($id)
+        ->update([
+         ['path' => 'name', 'value' => $request->name],
+         ['path' => 'pickupAddress', 'value' => $request->pickupAddress],
+         ['path' => 'status', 'value' => $request->status],
+        ]);
+        toastr()->success('تم تحديث طلب التبرع بنجاح');
+        return back();
     }
 
     /**
