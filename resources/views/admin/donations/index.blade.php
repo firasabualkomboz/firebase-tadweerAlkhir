@@ -47,7 +47,9 @@
                 </tr>
 
                 @foreach ($donations as $key => $donation)
+
                 <tr>
+
                     <td>{{ $loop->index }}</td>
                     <td>{{ $donation['name'] }}</td>
                     <td>{{ $donation['description'] ??'' }}</td>
@@ -56,15 +58,30 @@
                     <td> {{ $donation['pickupDateTime'] ?? '' }}</td>
                     {{-- <td>{!! date('d-m-Y' , strtotime($donation['date'])) ?? '' !!}</td> --}}
 
-                    <td><span class="btn btn-sm btn-warning">{{ $donation['status'] ?? '' }}</span></td>
-                    <td><img src="{{ $donation['imageUrl'] ??'' }}" height="60" alt="image donation"></td>
-                    {{-- <td>    <iframe src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}" width="100" height="100"></iframe> --}}
+                    <td><span class="btn btn-sm btn-success">{{ $donation['status'] ?? '' }}</span></td>
+                    <td><img src="{{ $donation['imageUrl'] ??'' }}" height="100" alt="image donation"></td>
+                    <td>
+    {{-- <button class="btn" type="button" data-toggle="modal" data-target="#video" data-toggle="tooltip" data-placement="top" title="Delete"> الفيديو </button>
+ --}}
+ <video controls width="250">
+
+    <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
+            type="video/webm">
+
+    <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
+            type="video/mp4">
+
+</video>
+
+
                     </td>
 
+
                 <td>
-    
+
                 <button class="btn btn-sm rounded-0 ml-2 btn-warning" type="button" data-toggle="modal" data-target="#update{{ $donation->id() }}" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-edit"></i></button>
-                <button class="btn btn-sm rounded-0 ml-2 btn-danger" type="button" data-toggle="modal" data-target="#delete{{ $donation->id() }}" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+
+                <button class="btn btn-sm rounded-0 ml-2 btn-danger" style="margin-top: 5px" type="button" data-toggle="modal" data-target="#delete{{ $donation->id() }}" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
 
 
             </td>
@@ -127,7 +144,7 @@
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 <div class="modal-header">
-<h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+<h5 class="modal-title" id="exampleModalLabel">حذف التبرع</h5>
 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span>
 </button>
@@ -140,10 +157,55 @@
 <form id="my-form" action="{{ url('admin/donations/' .$donation->id() )  }}" method="POST">
 @csrf
 @method('DELETE')
-<button id="btn" type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>
+<button  type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> حذف </i></button>
 </form>
 
-<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+<button type="button" class="btn btn-success" data-dismiss="modal">تراجع</button>
+
+</div>
+</div>
+</div>
+</div>
+{{-- end delete --}}
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="video" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">حذف التبرع</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+test
+
+{{--
+    <iframe width="200" height="200" src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}" allowfullscreen="" controls="0" autoplay="0" frameborder="0" scrolling="no"></iframe> --}}
+
+
+
+<video controls width="250">
+
+    <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
+            type="video/webm">
+
+    <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
+            type="video/mp4">
+
+</video>
+
+
+
+
+
+</div>
+<div class="modal-footer">
+
+
+<button type="button" class="btn btn-success" data-dismiss="modal">تراجع</button>
 
 </div>
 </div>

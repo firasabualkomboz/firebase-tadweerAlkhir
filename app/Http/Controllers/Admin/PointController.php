@@ -38,7 +38,7 @@ class PointController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.points.create');
     }
 
     /**
@@ -49,7 +49,21 @@ class PointController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->doc_id == null){
+
+            $request->validate([
+            'name' => 'required',
+            'location'       => 'required',
+            ]);
+
+            $partRef = $this->firestore->database()->collection('points')->newDocument();
+            $partRef->set([
+            'name' => $request->name,
+            'location'       => $request->location
+            ]);
+            toastr()->success('تم إضافة نقطة جديدة بنجاح');
+            return redirect()->route('points.index');
+        }
     }
 
     /**
@@ -83,7 +97,13 @@ class PointController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $point = $this->firestore->database()->collection('points')->document($id)
+        ->update([
+         ['path' => 'name', 'value' => $request->name],
+         ['path' => 'location', 'value' => $request->location],
+        ]);
+        toastr()->success('تم تحديث النقطة بنجاح');
+        return back();
     }
 
     /**
@@ -94,6 +114,8 @@ class PointController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->firestore->database()->collection('points')->document($id)->delete();
+        toastr()->error('تم حذف النقطة بنجاح');
+        return back();
     }
 }

@@ -23,10 +23,13 @@ class DonationController extends Controller
      */
     public function index()
     {
-        // $donations = $this->database->getReference($this->database_table)->getValue();
+        $test = $this->database->getReference($this->database_table)->getValue();
         $donations = $this->firestore->database()->collection('donations')->documents();
+
+
         return view('admin.donations.index',[
             'donations' => $donations,
+            'test' => $test,
         ]);
     }
 
@@ -121,7 +124,7 @@ class DonationController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
