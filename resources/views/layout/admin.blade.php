@@ -15,6 +15,10 @@
     <link href="{{ asset('assets/plugins/datepicker/datepicker3.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet" type="text/css" />
+
+
+
+
     @toastr_css
 
   </head>
@@ -33,6 +37,7 @@
     @jquery
     @toastr_js
     @toastr_render
+
         <script src="{{ asset('assets/plugins/jQuery/jQuery-2.1.3.min.js') }}"></script>
         <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
         <script>$.widget.bridge('uibutton', $.ui.button);</script>

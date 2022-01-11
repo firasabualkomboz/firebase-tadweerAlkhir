@@ -45,7 +45,7 @@
                   <th>الفيديو</th>
                   <th>أكشن</th>
                 </tr>
-
+            
                 @foreach ($donations as $key => $donation)
 
                 <tr>
