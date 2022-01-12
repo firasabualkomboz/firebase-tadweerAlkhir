@@ -1,48 +1,54 @@
 
+@extends('layouts.admin')
 
-@extends('layout.admin')
-
+@section('content-header')
+<!-- Content Header (Page header) -->
+<div class="content-header">
+<div class="container-fluid">
+<div class="row mb-2">
+<div class="col-sm-6">
+<h1 class="m-0 text-dark">إضافة فئة جديدة</h1>
+</div><!-- /.col -->
+<div class="col-sm-6">
+<ol class="breadcrumb float-sm-right">
+<li class="breadcrumb-item"><a href="#">الرئيسية</a></li>
+<li class="breadcrumb-item active">الفئات</li>
+<li class="breadcrumb-item active">اضافة فئة جديدة</li>
+</ol>
+</div><!-- /.col -->
+</div><!-- /.row -->
+</div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+@endsection
 @section('content')
 
-<div class="content-wrapper">
-    <section class="content-header">
-      <h1>All Donations</h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">الفئات</li>
-      </ol>
-    </section>
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-6">
+      <!-- general form elements -->
+      <div class="card card-primary">
+        {{-- <div class="card-header">
+          <h3 class="card-title">إضافة فئة جديدة</h3>
+        </div> --}}
+        <!-- /.card-header -->
+        <!-- form start -->
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title"> إضافة فئة جديدة </h3>
-              <div class="box-tools">
-                <div class="input-group">
-                  <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>
+    <form role="form" class="" action="{{ route('categories.store') }}" method="post">
+    @csrf
+    @include('admin.categories._form')
+    </form>
 
-            </div>
-
-          </div>
-
-
-          <form class="" action="{{ route('categories.store') }}" method="post">
-            @csrf
-            @include('admin.categories._form')
-            </form>
-
-
-        </div>
       </div>
-    </section>
+      <!-- /.card -->
+
+
+    </div>
+    <!--/.col (left) -->
+
+
   </div>
+  <!-- /.row -->
 
 @endsection
+

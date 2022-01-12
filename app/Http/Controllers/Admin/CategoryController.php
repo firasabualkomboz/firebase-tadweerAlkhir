@@ -54,11 +54,13 @@ class CategoryController extends Controller
         if ($request->doc_id == null) {
             // Uplode Data
             $request->validate([
+              'arabicName' => 'required',
               'name' => 'required',
             //   'imageUrl' => 'required',
              ]);
             $stuRef = $this->firestore->database()->collection('categories')->newDocument();
             $stuRef->set([
+              'arabicName' => $request->arabicName,
               'name' => $request->name,
             //   'imageUrl' => $request->imageUrl,
             ]);
