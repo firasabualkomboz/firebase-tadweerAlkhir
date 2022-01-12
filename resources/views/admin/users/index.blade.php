@@ -1,86 +1,99 @@
-@extends('layout.admin')
+@extends('layouts.admin')
 
+@section('content-header')
+<!-- Content Header (Page header) -->
+<div class="content-header">
+<div class="container-fluid">
+<div class="row mb-2">
+<div class="col-sm-6">
+<h1 class="m-0 text-dark">المستخدمين</h1>
+</div><!-- /.col -->
+<div class="col-sm-6">
+<ol class="breadcrumb float-sm-right">
+<li class="breadcrumb-item"><a href="#">الرئيسية</a></li>
+<li class="breadcrumb-item active">الفئات</li>
+</ol>
+</div><!-- /.col -->
+</div><!-- /.row -->
+</div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+@endsection
 @section('content')
 
+email -
+address -
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"> <a class="btn btn-primary" href="{{ route('categories.create') }}">إضافة فئة جديدة</a> </h3>
 
-<div class="content-wrapper">
-    <section class="content-header">
-      <h1>All users</h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">users</li>
-      </ol>
-    </section>
+    <div class="card-tools">
+    <div class="input-group input-group-sm" style="width: 150px;">
+    <input type="text" name="table_search" class="form-control float-right" placeholder="بحث">
 
-    <!-- Main content -->
-    <section class="content">
-        <a class="btn btn-primary btn-sm" href="{{ route('users.create') }}">add new User</a>
+    <div class="input-group-append">
+    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+    </div>
+    </div>
+    </div>
+    </div>
 
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title"> All users </h3>
-              <div class="box-tools">
-                <div class="input-group">
-                  <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tr>
-                  <th>ID</th>
-                  <th>Image</th>
-                  <th>user Name</th>
-                  <th>phone</th>
-                  <th>Address</th>
-                  <th>Email</th>
-                  <th>User Type</th>
-                  <th>Items Donated</th>
-                  <th>Completed Tasks</th>
-                  <th>joinDate</th>
+    <div class="card-body table-responsive p-0">
+    <table class="table table-hover">
 
-                  <th>Action</th>
-                </tr>
+    <thead>
+    <tr>
+    <th>الرقم</th>
+    <th> الصورة</th>
+    <th> اسم المستخدم</th>
+    <th> رقم الجوال</th>
+    <th> عناصر التبرع</th>
+    <th> مهمات مكتملة</th>
+    <th>تاريخ الانضمام </th>
 
-                @foreach ($users as $key => $user)
-                <tr>
-                    <td>{{ $loop->index }}</td>
-                <td><img src="{{ $user['image_url'] ??'' }}" height="60" alt="image user"></td>
+    <th>اكشن</th>
 
-                    <td>{{ $user['name'] }}</td>
-                    <td>{{ $user['phoneNumber'] ?? '' }}</td>
-                    <td>{{ $user['address'] ?? '' }}</td>
-                    <td>{{ $user['email'] ?? '' }}</td>
-                    <td>{{ $user['type']  ?? ''}}</td>
-                    <td><span class="badge">{{ $user['itemsDonated'] ?? ''}}</span></td>
-                    <td><span class="">{{ $user['completedTasks'] ?? ''}}</span></td>
-                    <td><span class="">{{ $user['joinDate'] ?? ''}}</span></td>
+    </tr>
+    </thead>
 
-                <td>
-                {{-- <a class="btn btn-sm btn-warning" href=""><i class="fa fa-edit"> Edit </i></a> - --}}
-                <button class="btn btn-sm btn-warning rounded-0" type="button" data-toggle="modal" data-target="#update{{ $user->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">&#9998;</button>
+    <tbody>
+    <tr>
 
-                <form action="{{ url('delete-user/'.$key ) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> Delete </i></button>
-                </form>
-                            </td>
+
+@foreach ($users as $key => $user)
+
+<tr>
+<td>{{ $loop->index }}</td>
+<td><img src="{{ $user['image_url'] ?? 'لا يوجد صورة للمستخدم' }}" height="60" alt="صورة المستخدم"></td>
+<td>{{ $user['name'] }}</td>
+<td>{{ $user['phoneNumber'] ?? '' }}</td>
+<td>{{ $user['type']  ?? ''}}</td>
+<td><span class="badge">{{ $user['itemsDonated'] ?? ''}}</span></td>
+<td><span class="">{{ $user['completedTasks'] ?? ''}}</span></td>
+<td><span class="">{{ $user['joinDate'] ?? ''}}</span></td>
+<td>
+
+
+<button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#update{{ $user->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
+تعديل
+</button>
+
+<button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#delete{{ $user->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
+حذف
+</button>
+
+</td>
 </tr>
 
 
 <!-- Update -->
-
 <div class="modal fade bd-example-modal-lg" id="update{{ $user->id() }}"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content">
 <div class="modal-header">
-<h5 class="modal-title">تحديث مستخدم</h5>
+<h5 class="modal-title">تعديل بيانات المستخدم</h5>
 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span>
 </button>
@@ -100,14 +113,16 @@
 </div>
 
 <div class="form-group">
-{!! Form::label('Name', 'البريد الألكتروني') !!}
-{!! Form::text('email', null, ['class'=>'form-control'])!!}
+{!! Form::label('type', 'نوع المستخدم') !!}
+{!! Form::text('type', null, ['class'=>'form-control'])!!}
 </div>
+
+
 
 </div>
 
 <div class="modal-footer">
-{!! Form::submit('تحديث', ['class'=>'btn btn-success']) !!}
+{!! Form::submit('حفظ التعديلات', ['class'=>'btn btn-success']) !!}
 {!! Form::close() !!}
 <button type="button" class="btn btn-danger" data-dismiss="modal">تراجع</button>
 </div>
@@ -115,15 +130,55 @@
 </div>
 </div>
 
+{{-- <!-- Delete Modal -->
+<div class="modal fade" id="delete{{ $user->id() }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">حذف الفئة</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+هل أنت متأكد من عملية الحذف ؟
+</div>
+<div class="modal-footer">
 
-                @endforeach
+<form style="margin-top: 10px" action="{{ Url('admin/categories/' .$category->id() )  }}" method="POST">
+@csrf
+@method('DELETE')
+<button type="submit" class="btn btn-sm btn-danger"> تأكيد الحذف </button>
+</form>
 
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+<button type="button" class="btn btn-success" data-dismiss="modal">تراجع</button>
+
+</div>
+</div>
+</div>
+</div> --}}
+
+
+@endforeach
+
+</tr>
+
+
+
+</tbody>
+</table>
+</div>
+<!-- /.card-body -->
+</div>
+<!-- /.card -->
+</div>
+</div>
+<!-- /.row -->
 
 @endsection
+
+
+
+
+
+

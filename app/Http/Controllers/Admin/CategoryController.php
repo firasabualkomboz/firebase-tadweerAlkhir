@@ -146,7 +146,9 @@ class CategoryController extends Controller
     {
         $category = $this->firestore->database()->collection('categories')->document($id)
         ->update([
+         ['path' => 'arabicName', 'value' => $request->arabicName],
          ['path' => 'name', 'value' => $request->name],
+
         ]);
         toastr()->success('تم تحديث الفئة بنجاح');
         return back();
