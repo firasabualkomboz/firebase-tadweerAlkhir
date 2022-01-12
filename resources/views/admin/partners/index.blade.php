@@ -1,61 +1,80 @@
-@extends('layout.admin')
 
+
+@extends('layouts.admin')
+
+@section('content-header')
+<!-- Content Header (Page header) -->
+<div class="content-header">
+<div class="container-fluid">
+<div class="row mb-2">
+<div class="col-sm-6">
+<h1 class="m-0 text-dark"> الشركاء</h1>
+</div><!-- /.col -->
+<div class="col-sm-6">
+<ol class="breadcrumb float-sm-right">
+<li class="breadcrumb-item"><a href="#">الرئيسية</a></li>
+<li class="breadcrumb-item active"> الشركاء</li>
+</ol>
+</div><!-- /.col -->
+</div><!-- /.row -->
+</div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+@endsection
 @section('content')
 
 
-<div class="content-wrapper">
-    <section class="content-header">
-      <h1>All Partners</h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Partners</li>
-      </ol>
-    </section>
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"> <a class="btn btn-primary" href="{{ route('partners.create') }}">إضافة شريك جديد</a> </h3>
 
-    <!-- Main content -->
-    <section class="content">
-        <a style="margin-bottom: 5px;" class="btn btn-primary btn-sm" href="{{ route('partners.create') }}">Add New Partner</a>
+    <div class="card-tools">
+    <div class="input-group input-group-sm" style="width: 150px;">
+    <input type="text" name="table_search" class="form-control float-right" placeholder="بحث">
 
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title"> All Partners </h3>
-              <div class="box-tools">
-                <div class="input-group">
-                  <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Image</th>
-                  <th>Action</th>
-                </tr>
+    <div class="input-group-append">
+    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="card-body table-responsive p-0">
+    <table class="table table-hover">
+
+    <thead>
+    <tr>
+    <th>الرقم</th>
+    <th>الأسم</th>
+    <th>الصورة </th>
+    <th>اكشن</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+
 
 @foreach ($partners as $key => $partner)
+
 <tr>
+<td>{{ $loop->index }}</td>
+<td>{{ $partner['description'] }}</td>
+<td><img src="{{ $partner['image'] ??'' }}" height="60" alt="image"></td>
 
-    <td>{{ $loop->index }}</td>
-    <td>{{ $partner['name'] ?? $partner['description'] }}</td>
-    <td><img height="60" src="{{ $partner['image']  ?? ''}}" alt="image partner"></td>
+<td>
+    <button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#update{{ $partner->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
+        تعديل
+        </button>
 
-    <td>
-<button class="btn btn-sm btn-warning rounded-0" type="button" data-toggle="modal" data-target="#update{{ $partner->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">&#9998;</button>
+<button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#delete{{ $partner->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
+حذف
+</button>
 
-<form style="margin-top: 10px" action="{{ Url('admin/partners/' .$partner->id() )  }}" method="POST">
-@csrf
-@method('DELETE')
-<button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> </i></button>
-</form>
-            </td>
-                </tr>
+</td>
+</tr>
 
 
 
@@ -65,7 +84,7 @@
     <div class="modal-dialog modal-lg">
     <div class="modal-content">
     <div class="modal-header">
-    <h5 class="modal-title">Update Partner</h5>
+    <h5 class="modal-title">تعديل بيانات الشريك</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
     </button>
@@ -75,16 +94,16 @@
 
     {!! Form::model($partner->data(), ['method'=>'PATCH', 'action'=> ['Admin\PartnerController@update', $partner->id()] ]) !!}
     <div class="form-group">
-    {!! Form::label('Name', 'Description') !!}
+    {!! Form::label('Name', 'الوصف') !!}
     {!! Form::text('description', null, ['class'=>'form-control'])!!}
     </div>
 
     </div>
 
     <div class="modal-footer">
-    {!! Form::submit('Save changes', ['class'=>'btn btn-success']) !!}
+    {!! Form::submit('حفظ التعديلات', ['class'=>'btn btn-success']) !!}
     {!! Form::close() !!}
-    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">تراجع</button>
     </div>
     </div>
     </div>
@@ -92,14 +111,51 @@
 
 
 
-                @endforeach
 
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+<!-- Delete Modal -->
+<div class="modal fade" id="delete{{ $partner->id() }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">حذف الصورة</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+هل أنت متأكد من عملية الحذف ؟
+</div>
+<div class="modal-footer">
+
+<form style="margin-top: 10px" action="{{ Url('admin/partners/' .$partner->id() )  }}" method="POST">
+@csrf
+@method('DELETE')
+<button type="submit" class="btn btn-sm btn-danger"> تأكيد الحذف </button>
+</form>
+
+<button type="button" class="btn btn-success" data-dismiss="modal">تراجع</button>
+
+</div>
+</div>
+</div>
+</div>
+
+
+@endforeach
+
+</tr>
+
+
+
+</tbody>
+</table>
+</div>
+<!-- /.card-body -->
+</div>
+<!-- /.card -->
+</div>
+</div>
+<!-- /.row -->
 
 @endsection
+

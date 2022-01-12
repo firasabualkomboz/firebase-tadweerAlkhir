@@ -11,7 +11,7 @@
 <div class="col-sm-6">
 <ol class="breadcrumb float-sm-right">
 <li class="breadcrumb-item"><a href="#">الرئيسية</a></li>
-<li class="breadcrumb-item active">الفئات</li>
+<li class="breadcrumb-item active">المستخدمين</li>
 </ol>
 </div><!-- /.col -->
 </div><!-- /.row -->
@@ -21,13 +21,11 @@
 @endsection
 @section('content')
 
-email -
-address -
 <div class="row">
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"> <a class="btn btn-primary" href="{{ route('categories.create') }}">إضافة فئة جديدة</a> </h3>
+          <h3 class="card-title"> <a class="btn btn-primary" href="{{ route('users.create') }}">إضافة مستخدم جديد</a> </h3>
 
     <div class="card-tools">
     <div class="input-group input-group-sm" style="width: 150px;">
@@ -49,7 +47,8 @@ address -
     <th> الصورة</th>
     <th> اسم المستخدم</th>
     <th> رقم الجوال</th>
-    <th> عناصر التبرع</th>
+    <th> نوع المستخدم</th>
+    <th>عناصر التبرع </th>
     <th> مهمات مكتملة</th>
     <th>تاريخ الانضمام </th>
 
@@ -64,25 +63,30 @@ address -
 
 @foreach ($users as $key => $user)
 
+
 <tr>
 <td>{{ $loop->index }}</td>
-<td><img src="{{ $user['image_url'] ?? 'لا يوجد صورة للمستخدم' }}" height="60" alt="صورة المستخدم"></td>
+<td>
+<button class="btn btn-sm" type="button" data-toggle="modal" data-target="#image{{ $user->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
+<img src="{{ $user['image_url'] ?? '' }}"height="100" alt="صورة المستخدم">
+</button>
+</td>
 <td>{{ $user['name'] }}</td>
 <td>{{ $user['phoneNumber'] ?? '' }}</td>
 <td>{{ $user['type']  ?? ''}}</td>
 <td><span class="badge">{{ $user['itemsDonated'] ?? ''}}</span></td>
 <td><span class="">{{ $user['completedTasks'] ?? ''}}</span></td>
-<td><span class="">{{ $user['joinDate'] ?? ''}}</span></td>
+<td><span class="">@php  echo  date('m-d-Y', strtotime($user['joinDate'])) . ' - ' .  date('g:i A', strtotime($user['joinDate'])); @endphp </span></td>
 <td>
 
 
 <button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#update{{ $user->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
 تعديل
 </button>
-
+{{--
 <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#delete{{ $user->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
 حذف
-</button>
+</button> --}}
 
 </td>
 </tr>
@@ -112,10 +116,20 @@ address -
 {!! Form::text('phoneNumber', null, ['class'=>'form-control'])!!}
 </div>
 
+
 <div class="form-group">
-{!! Form::label('type', 'نوع المستخدم') !!}
-{!! Form::text('type', null, ['class'=>'form-control'])!!}
+    {!! Form::label('type', 'نوع المستخدم') !!}
+<div class="form-check">
+<input class="form-check-input" value="donor" name="type" type="radio">
+<label class="form-check-label">متبرع</label>
 </div>
+<div class="form-check">
+<input class="form-check-input" value="driver" name="type" type="radio">
+<label class="form-check-label">موصل</label>
+</div>
+
+</div>
+
 
 
 
@@ -125,6 +139,23 @@ address -
 {!! Form::submit('حفظ التعديلات', ['class'=>'btn btn-success']) !!}
 {!! Form::close() !!}
 <button type="button" class="btn btn-danger" data-dismiss="modal">تراجع</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Update -->
+<div class="modal fade bd-example-modal-lg" id="image{{ $user->id() }}"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">الصورة</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+
+<div class="modal-body pl-4 text-center">
+    <img src="{{ $user['image_url'] ?? '' }}"height="50%" width="50%" alt="صورة المستخدم">
 </div>
 </div>
 </div>

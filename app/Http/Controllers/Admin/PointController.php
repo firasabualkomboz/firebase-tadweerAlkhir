@@ -52,7 +52,7 @@ class PointController extends Controller
         if($request->doc_id == null){
 
             $request->validate([
-            'name' => 'required',
+            'name'           => 'required',
             'location'       => 'required',
             ]);
 

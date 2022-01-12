@@ -100,7 +100,7 @@ class UserController extends Controller
         ->update([
          ['path' => 'name', 'value' => $request->name],
          ['path' => 'phoneNumber', 'value' => $request->phoneNumber],
-         ['path' => 'email', 'value' => $request->email],
+         ['path' => 'type', 'value' => $request->type],
         ]);
         toastr()->success('تم تحديث السمتخدم بنجاح');
         return back();

@@ -1,4 +1,3 @@
-
 @extends('layouts.admin')
 
 @section('content-header')
@@ -24,31 +23,31 @@
 @section('content')
 
 <div class="row">
-    <!-- left column -->
-    <div class="col-md-6">
-      <!-- general form elements -->
-      <div class="card card-primary">
-        {{-- <div class="card-header">
-          <h3 class="card-title">إضافة فئة جديدة</h3>
-        </div> --}}
-        <!-- /.card-header -->
-        <!-- form start -->
+<!-- left column -->
+<div class="col-md-6">
+<!-- general form elements -->
+<div class="card card-primary">
+{{-- <div class="card-header">
+<h3 class="card-title">إضافة فئة جديدة</h3>
+</div> --}}
+<!-- /.card-header -->
+<!-- form start -->
 
-    <form role="form" class="" action="{{ route('categories.store') }}" method="post">
-    @csrf
-    @include('admin.categories._form')
-    </form>
+<form role="form" class="" action="{{ route('categories.store') }}" method="post">
+@csrf
+@include('admin.categories._form')
+</form>
 
-      </div>
-      <!-- /.card -->
-
-
-    </div>
-    <!--/.col (left) -->
+</div>
+<!-- /.card -->
 
 
-  </div>
-  <!-- /.row -->
+</div>
+<!--/.col (left) -->
+
+
+</div>
+<!-- /.row -->
 
 @endsection
 

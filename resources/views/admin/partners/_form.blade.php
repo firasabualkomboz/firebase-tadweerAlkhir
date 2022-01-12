@@ -1,13 +1,21 @@
 
-    <div class="form-group">
-    <label>Name</label>
-    <input type="text" name="description" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    </div>
 
+<div class="card-body">
     <div class="form-group">
-    <label>Image</label>
-    <input name="image" type="file" class="form-control" id="">
+    <label for="exampleInputEmail1">الأسم</label>
+    <input type="text" name="description" value="" class="form-control" >
     </div>
 
 
-<button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-group">
+    <label for="exampleInputPassword1">الصورة</label>
+    <input type="file" name="image" class="form-control" id="">
+    </div>
+
+    </div>
+
+    <div class="card-footer">
+    <button type="submit" class="btn btn-primary">حفظ</button>
+    </div>
+
+
