@@ -2,23 +2,22 @@
 @extends('layouts.admin')
 
 @section('content-header')
-<!-- Content Header (Page header) -->
 <div class="content-header">
 <div class="container-fluid">
 <div class="row mb-2">
 <div class="col-sm-6">
 <h1 class="m-0 text-dark">الطلبات</h1>
-</div><!-- /.col -->
+</div>
 <div class="col-sm-6">
 <ol class="breadcrumb float-sm-right">
 <li class="breadcrumb-item"><a href="#">الرئيسية</a></li>
 <li class="breadcrumb-item active">الطلبات</li>
 </ol>
-</div><!-- /.col -->
-</div><!-- /.row -->
-</div><!-- /.container-fluid -->
 </div>
-<!-- /.content-header -->
+</div>
+</div>
+</div>
+
 @endsection
 @section('content')
 
@@ -64,7 +63,6 @@
 <td>{{ $loop->index }}</td>
 <td>{{ $donation['name'] }}</td>
 <td>{{ $donation['description'] ??'' }}</td>
-<td>{{ $donation['userId'] ??'' }}</td>
 
 {{-- <td><span class="">@php  echo  date('m-d-Y', strtotime($donation['date'])) . ' - ' .
   date('g:i A', strtotime($donation['date'])); @endphp </span></td> --}}
@@ -105,55 +103,13 @@
 <div class="modal-body pl-4">
 
     <div class="row">
-        <div class="col-lg-6">
-            <h4>الصورة</h4>
-            <img src="{{ $donation['imageUrl'] ?? '' }}"height="50%" width="50%" alt="صورة المستخدم">
-        </div>
-        <div class="col-lg-6">
-            <h4>الفيديو</h4>
-            <video controls width="250">
-
-                <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
-                type="video/webm">
-
-                <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
-                type="video/mp4">
-
-                </video>
-              </div>
-              <div class="col-lg-4 p-2 text-center" style="background: #f8f8f8; border: solid 1px #000;">
-                <h6>العنوان</h6>
-                <hr>
-                {{ $donation['pickupAddress'] ?? '' }}
-                <iframe
-                width="600"
-                height="450"
-                frameborder="0" style="border:0"
-                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBS_WLni5YfR2VHwzTzf50iFsb4hmv9Vw8
-                  &q= {{ $donation['pickupAddress'] ?? '' }}" allowfullscreen>
-              </iframe>
-              </div>
-
-              <div class="col-lg-4 p-2 text-center" style="background: #f8f8f8; border: solid 1px #000;">
-                <h6>التاريخ</h6>
-                <hr>
-                @php  echo  date('m-d-Y', strtotime($strtotime['date'] ?? '')) . ' - ' .  date('g:i A', strtotime($strtotime['date'] ?? '')); @endphp
-              </div>
-
-              <div class="col-lg-4 p-2 text-center" style="background: #f8f8f8; border: solid 1px #000;">
-                <h6>تاريخ التسليم</h6>
-                <hr>
-                @php  echo  date('m-d-Y', strtotime($strtotime['joinDate'] ?? '')) . ' - ' .  date('g:i A', strtotime($strtotime['joinDate'] ?? '')); @endphp
-              </div>
-    </div>
-
-{{-- <ol class="list-unstyled">
-<li>الصورة
-<br>
+<div class="col-lg-6">
+<h4>الصورة</h4>
 <img src="{{ $donation['imageUrl'] ?? '' }}"height="50%" width="50%" alt="صورة المستخدم">
-</li>
-<li>الفيديو
-<br>
+</div>
+
+<div class="col-lg-6">
+<h4>الفيديو</h4>
 <video controls width="250">
 
 <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
@@ -163,24 +119,28 @@ type="video/webm">
 type="video/mp4">
 
 </video>
-</li>
-<li>
-العنوان
-<br>
+</div>
+
+<div class="col-lg-4 p-2 text-center" style="background: #f8f8f8; border: solid 1px #000;">
+<h6>العنوان</h6>
+<hr>
 {{ $donation['pickupAddress'] ?? '' }}
+</div>
 
-</li>
-<li>
-التاريخ
-{{ $donation['date'] ?? '' }}
+<div class="col-lg-4 p-2 text-center" style="background: #f8f8f8; border: solid 1px #000;">
+<h6>التاريخ</h6>
+<hr>
+@php  echo  date('m-d-Y', strtotime($strtotime['date'] ?? '')) . ' - ' .  date('g:i A', strtotime($strtotime['date'] ?? '')); @endphp
+</div>
 
-</li>
-<li>
-تاريخ التسليم
-{{ $donation['pickupDateTime'] ?? '' }}
-<td><span class="">@php  echo  date('m-d-Y', strtotime($strtotime['joinDate'] ?? '')) . ' - ' .  date('g:i A', strtotime($strtotime['joinDate'] ?? '')); @endphp </span></td>
-</li>
-</ol> --}}
+<div class="col-lg-4 p-2 text-center" style="background: #f8f8f8; border: solid 1px #000;">
+<h6>تاريخ التسليم</h6>
+<hr>
+@php  echo  date('m-d-Y', strtotime($strtotime['joinDate'] ?? '')) . ' - ' .  date('g:i A', strtotime($strtotime['joinDate'] ?? '')); @endphp
+</div>
+
+    </div>
+
 </div>
 
 
