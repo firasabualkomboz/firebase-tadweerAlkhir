@@ -58,7 +58,7 @@ class PointController extends Controller
 
             $partRef = $this->firestore->database()->collection('points')->newDocument();
             $partRef->set([
-            'name' => $request->name,
+            'name'           => $request->name,
             'location'       => $request->location
             ]);
             toastr()->success('تم إضافة نقطة جديدة بنجاح');

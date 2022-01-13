@@ -7,6 +7,8 @@
 // use App\Http\Controllers\OrdersController;
 // use App\Http\Controllers\DriversController;
 // use App\Http\Controllers\DonationsController;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,12 +25,18 @@ use Illuminate\Support\Facades\Route;
 // Auth::routes();
 Auth::routes(['register' => false]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/',function(){
-  return view('auth.login');
+
+
+  return view('index');
 
 });
+
+
+
+// Route::get('/', 'HomeController@home');
 
 
 // Route::get('/', function () {
@@ -58,6 +66,10 @@ Route::group([], function (){
             // users
             Route::resource('users', \Admin\UserController::class);
             Route::delete('delete-user/{id}',[ UserController::class,'destroy']);
+            Route::get('/logout', function(){
+                Auth::logout();
+                return view('auth.login');
+             })->name('logout');
 
             // points
             Route::resource('points', \Admin\PointController::class);

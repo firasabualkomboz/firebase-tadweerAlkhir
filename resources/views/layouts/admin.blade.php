@@ -30,6 +30,10 @@
   <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
   <!-- Custom style for RTL -->
   <link rel="stylesheet" href="{{ asset('assets/dashboard/dist/css/custom.css') }}">
+
+  @toastr_css
+
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -47,45 +51,16 @@
 
     </ul>
 
-
-
     <!-- Right navbar links -->
     <ul class="navbar-nav mr-auto-navbav">
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="{{ asset('assets/dashboard/dist/img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
+    <li class="nav-item dropdown">
+    <a class="btn btn-sm btn-danger" data-toggle="dropdown" href="{{ route('logout') }}">
+    تسجيل خروج
+    </a>
 
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-        </div>
-      </li>
+    </li>
 
-
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -95,36 +70,18 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
 
-      <span class="brand-text font-weight-light">تدوير الخير</span>
+      <span class="brand-text font-weight-light pr-3">تدوير الخير</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{ asset('assets/dashboard/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">اسم المستخدم</a>
-        </div>
-      </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                لوحة التحكم
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
 
-          </li>
 
         <li class="nav-item">
         <a href="{{ route('donations.index') }}" class="nav-link">
@@ -190,6 +147,8 @@
         </p>
         </a>
         </li>
+
+
 {{--
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -342,7 +301,11 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+@jquery
+@toastr_js
+@toastr_render
 
+@yield('script')
 <!-- jQuery -->
 <script src="{{asset ('assets/dashboard/plugins/jquery/jquery.min.js') }}"></script>
 <!-- jQuery UI 1.11.4 -->

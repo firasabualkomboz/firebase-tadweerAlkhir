@@ -1,103 +1,102 @@
-@extends('layout.admin')
 
+@extends('layouts.admin')
+
+@section('content-header')
+<!-- Content Header (Page header) -->
+<div class="content-header">
+<div class="container-fluid">
+<div class="row mb-2">
+<div class="col-sm-6">
+<h1 class="m-0 text-dark">الطلبات</h1>
+</div><!-- /.col -->
+<div class="col-sm-6">
+<ol class="breadcrumb float-sm-right">
+<li class="breadcrumb-item"><a href="#">الرئيسية</a></li>
+<li class="breadcrumb-item active">الطلبات</li>
+</ol>
+</div><!-- /.col -->
+</div><!-- /.row -->
+</div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+@endsection
 @section('content')
 
 
-<div class="content-wrapper">
-    <section class="content-header">
-      <h1> التبرعات</h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Donations</li>
-      </ol>
-    </section>
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"> <a class="btn btn-primary" href="{{ route('donations.create') }}">إضافة طلب جديدة</a> </h3>
 
-    <!-- Main content -->
-    <section class="content">
-        {{-- <a class="btn btn-primary btn-sm" href="{{ route('donations.create') }}">Add New Donation</a> --}}
+    <div class="card-tools">
+    <div class="input-group input-group-sm" style="width: 150px;">
+    <input type="text" name="table_search" class="form-control float-right" placeholder="بحث">
 
+    <div class="input-group-append">
+    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+    </div>
+    </div>
+    </div>
+    </div>
 
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title"> كل التبرعات </h3>
-              <div class="box-tools">
-                <div class="input-group">
-                  <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tr>
-                  <th>ID</th>
-                  <th> الأسم </th>
-                  <th>الوصف</th>
-                  <th>عنوان التسليم</th>
-                  <th>التاريخ</th>
-                  <th>تاريخ التسليم</th>
-                  <th>الحالة</th>
-                  <th>الصورة</th>
-                  <th>الفيديو</th>
-                  <th>أكشن</th>
-                </tr>
-            
-                @foreach ($donations as $key => $donation)
+    <div class="card-body table-responsive p-0">
+    <table class="table table-hover">
 
-                <tr>
+    <thead>
+    <tr>
+    <th>الرقم</th>
+    <th>الأسم </th>
+    <th>الوصف </th>
+    <th>حالة الطلب</th>
+    <th>اكشن</th>
+    </tr>
+    </thead>
 
-                    <td>{{ $loop->index }}</td>
-                    <td>{{ $donation['name'] }}</td>
-                    <td>{{ $donation['description'] ??'' }}</td>
-                    <td >{{ $donation['pickupAddress'] ?? '' }}</td>
-                    <td>{{ $donation['date'] ?? '' }}</td>
-                    <td> {{ $donation['pickupDateTime'] ?? '' }}</td>
-                    {{-- <td>{!! date('d-m-Y' , strtotime($donation['date'])) ?? '' !!}</td> --}}
-
-                    <td><span class="btn btn-sm btn-success">{{ $donation['status'] ?? '' }}</span></td>
-                    <td><img src="{{ $donation['imageUrl'] ??'' }}" height="100" alt="image donation"></td>
-                    <td>
-    {{-- <button class="btn" type="button" data-toggle="modal" data-target="#video" data-toggle="tooltip" data-placement="top" title="Delete"> الفيديو </button>
- --}}
- <video controls width="250">
-
-    <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
-            type="video/webm">
-
-    <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
-            type="video/mp4">
-
-</video>
-
-
-                    </td>
-
-
-                <td>
-
-                <button class="btn btn-sm rounded-0 ml-2 btn-warning" type="button" data-toggle="modal" data-target="#update{{ $donation->id() }}" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-edit"></i></button>
-
-                <button class="btn btn-sm rounded-0 ml-2 btn-danger" style="margin-top: 5px" type="button" data-toggle="modal" data-target="#delete{{ $donation->id() }}" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
-
-
-            </td>
-                </tr>
+    <tbody>
+    <tr>
 
 
 
+@foreach ($donations as $key => $donation)
+
+<tr>
+<td>{{ $loop->index }}</td>
+<td>{{ $donation['name'] }}</td>
+<td>{{ $donation['description'] ??'' }}</td>
+<td>{{ $donation['userId'] ??'' }}</td>
+
+{{-- <td><span class="">@php  echo  date('m-d-Y', strtotime($donation['date'])) . ' - ' .
+  date('g:i A', strtotime($donation['date'])); @endphp </span></td> --}}
+
+<td><span class="btn btn-sm btn-success">{{ $donation['status'] ?? '' }}</span></td>
+
+<td>        </td>
+<td>
 
 
-<!-- Update -->
+<button class="btn btn-sm btn-secondary" type="button" data-toggle="modal" data-target="#details{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="details">
+تفاصيل أكثر
+</button>
 
-<div class="modal fade bd-example-modal-lg" id="update{{ $donation->id() }}"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#update{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
+تعديل
+</button>
+
+<button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#delete{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
+حذف
+</button>
+
+</td>
+</tr>
+
+<!-- details -->
+
+<div class="modal fade bd-example-modal-lg" id="details{{ $donation->id() }}"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content">
 <div class="modal-header">
-<h5 class="modal-title">تعديل على التبرع</h5>
+<h5 class="modal-title">تفاصيل الطلب</h5>
 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span>
 </button>
@@ -105,31 +104,131 @@
 
 <div class="modal-body pl-4">
 
-{!! Form::model($donation->data(), ['method'=>'PATCH', 'action'=> ['Admin\DonationController@update', $donation->id()] ]) !!}
-<div class="form-group">
-{!! Form::label('Name', 'الأسم') !!}
-{!! Form::text('name', null, ['class'=>'form-control'])!!}
+    <div class="row">
+        <div class="col-lg-6">
+            <h4>الصورة</h4>
+            <img src="{{ $donation['imageUrl'] ?? '' }}"height="50%" width="50%" alt="صورة المستخدم">
+        </div>
+        <div class="col-lg-6">
+            <h4>الفيديو</h4>
+            <video controls width="250">
+
+                <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
+                type="video/webm">
+
+                <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
+                type="video/mp4">
+
+                </video>
+              </div>
+              <div class="col-lg-4 p-2 text-center" style="background: #f8f8f8; border: solid 1px #000;">
+                <h6>العنوان</h6>
+                <hr>
+                {{ $donation['pickupAddress'] ?? '' }}
+                <iframe
+                width="600"
+                height="450"
+                frameborder="0" style="border:0"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBS_WLni5YfR2VHwzTzf50iFsb4hmv9Vw8
+                  &q= {{ $donation['pickupAddress'] ?? '' }}" allowfullscreen>
+              </iframe>
+              </div>
+
+              <div class="col-lg-4 p-2 text-center" style="background: #f8f8f8; border: solid 1px #000;">
+                <h6>التاريخ</h6>
+                <hr>
+                @php  echo  date('m-d-Y', strtotime($strtotime['date'] ?? '')) . ' - ' .  date('g:i A', strtotime($strtotime['date'] ?? '')); @endphp
+              </div>
+
+              <div class="col-lg-4 p-2 text-center" style="background: #f8f8f8; border: solid 1px #000;">
+                <h6>تاريخ التسليم</h6>
+                <hr>
+                @php  echo  date('m-d-Y', strtotime($strtotime['joinDate'] ?? '')) . ' - ' .  date('g:i A', strtotime($strtotime['joinDate'] ?? '')); @endphp
+              </div>
+    </div>
+
+{{-- <ol class="list-unstyled">
+<li>الصورة
+<br>
+<img src="{{ $donation['imageUrl'] ?? '' }}"height="50%" width="50%" alt="صورة المستخدم">
+</li>
+<li>الفيديو
+<br>
+<video controls width="250">
+
+<source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
+type="video/webm">
+
+<source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
+type="video/mp4">
+
+</video>
+</li>
+<li>
+العنوان
+<br>
+{{ $donation['pickupAddress'] ?? '' }}
+
+</li>
+<li>
+التاريخ
+{{ $donation['date'] ?? '' }}
+
+</li>
+<li>
+تاريخ التسليم
+{{ $donation['pickupDateTime'] ?? '' }}
+<td><span class="">@php  echo  date('m-d-Y', strtotime($strtotime['joinDate'] ?? '')) . ' - ' .  date('g:i A', strtotime($strtotime['joinDate'] ?? '')); @endphp </span></td>
+</li>
+</ol> --}}
 </div>
 
-<div class="form-group">
-{!! Form::label('Name', 'الموقع الجغرافي') !!}
-{!! Form::text('pickupAddress', null, ['class'=>'form-control'])!!}
+
 </div>
-{!! Form::label('Name', 'حالة التبرع') !!}
-
-<div class="form-group form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="status" id="inlineRadio3" value="Awaiting Pickup">
-    <label class="form-check-label" for="inlineRadio3">قيد التسليم</label>
-
-    <input class="form-check-input" type="radio" name="status" id="inlineRadio2" value="delivered">
-    <label class="form-check-label" for="inlineRadio2">تم التسليم</label>
-  </div>
+</div>
 </div>
 
+<!-- details -->
 
+
+
+
+<!-- Update -->
+<div class="modal fade bd-example-modal-lg" id="update{{ $donation->id() }}"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">تعديل الطلب</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+
+<div class="modal-body pl-4">
+
+    {!! Form::model($donation->data(), ['method'=>'PATCH', 'action'=> ['Admin\DonationController@update', $donation->id()] ]) !!}
+    <div class="form-group">
+    {!! Form::label('Name', 'الأسم') !!}
+    {!! Form::text('name', null, ['class'=>'form-control'])!!}
+    </div>
+
+    <div class="form-group">
+    {!! Form::label('Name', 'الموقع الجغرافي') !!}
+    {!! Form::text('pickupAddress', null, ['class'=>'form-control'])!!}
+    </div>
+    {!! Form::label('Name', 'حالة التبرع') !!}
+
+    <div class="form-group form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="status" id="inlineRadio3" value="Awaiting Pickup">
+        <label class="form-check-label" for="inlineRadio3">قيد التسليم</label>
+
+        <input class="form-check-input" type="radio" name="status" id="inlineRadio2" value="delivered">
+        <label class="form-check-label" for="inlineRadio2">تم التسليم</label>
+      </div>
+    </div>
 
 <div class="modal-footer">
-{!! Form::submit('تحديث', ['class'=>'btn btn-success']) !!}
+{!! Form::submit('حفظ التعديلات', ['class'=>'btn btn-success']) !!}
 {!! Form::close() !!}
 <button type="button" class="btn btn-danger" data-dismiss="modal">تراجع</button>
 </div>
@@ -137,14 +236,12 @@
 </div>
 </div>
 
-{{-- end update  --}}
-
 <!-- Delete Modal -->
 <div class="modal fade" id="delete{{ $donation->id() }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 <div class="modal-header">
-<h5 class="modal-title" id="exampleModalLabel">حذف التبرع</h5>
+<h5 class="modal-title" id="exampleModalLabel">حذف الطلب</h5>
 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span>
 </button>
@@ -154,10 +251,10 @@
 </div>
 <div class="modal-footer">
 
-<form id="my-form" action="{{ url('admin/donations/' .$donation->id() )  }}" method="POST">
+<form style="margin-top: 10px" action="{{ Url('admin/donations/' .$donation->id() )  }}" method="POST">
 @csrf
 @method('DELETE')
-<button  type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"> حذف </i></button>
+<button type="submit" class="btn btn-sm btn-danger"> تأكيد الحذف </button>
 </form>
 
 <button type="button" class="btn btn-success" data-dismiss="modal">تراجع</button>
@@ -166,62 +263,25 @@
 </div>
 </div>
 </div>
-{{-- end delete --}}
 
 
-<!-- Delete Modal -->
-<div class="modal fade" id="video" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title" id="exampleModalLabel">حذف التبرع</h5>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
+@endforeach
+
+</tr>
+
+
+</tbody>
+</table>
 </div>
-<div class="modal-body">
-test
-
-{{--
-    <iframe width="200" height="200" src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}" allowfullscreen="" controls="0" autoplay="0" frameborder="0" scrolling="no"></iframe> --}}
-
-
-
-<video controls width="250">
-
-    <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
-            type="video/webm">
-
-    <source src="{{ $donation['videoUrl']  ?? 'NAN A VIDEO '}}"
-            type="video/mp4">
-
-</video>
-
-
-
-
-
+<!-- /.card-body -->
 </div>
-<div class="modal-footer">
-
-
-<button type="button" class="btn btn-success" data-dismiss="modal">تراجع</button>
-
+<!-- /.card -->
 </div>
 </div>
-</div>
-</div>
-{{-- end delete --}}
-
-                @endforeach
-
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
+<!-- /.row -->
 
 @endsection
+
+
+
+
