@@ -23,13 +23,14 @@ class DonationController extends Controller
      */
     public function index()
     {
-        $test = $this->database->getReference($this->database_table)->getValue();
+        // $test = $this->database->getReference($this->database_table)->getValue();
         $donations = $this->firestore->database()->collection('donations')->documents();
 
+        $users = $this->firestore->database()->collection('users')->documents();
 
         return view('admin.donations.index',[
             'donations' => $donations,
-            'test' => $test,
+            'users' => $users,
         ]);
     }
 
@@ -124,7 +125,7 @@ class DonationController extends Controller
      */
     public function edit($id)
     {
-
+        return view('admin.donations.edit');
     }
 
     /**
@@ -136,12 +137,16 @@ class DonationController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $donation = $this->firestore->database()->collection('donations')->document($id)
         ->update([
          ['path' => 'name', 'value' => $request->name],
+        //  ['path' => 'pickupAddress', 'value' => $request->pickupAddress],
          ['path' => 'pickupAddress', 'value' => $request->pickupAddress],
+        //  ['path' => 'delivery_user', 'value' => $request->delivery_user],
          ['path' => 'status', 'value' => $request->status],
         ]);
+
         toastr()->success('تم تحديث طلب التبرع بنجاح');
         return back();
     }

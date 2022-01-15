@@ -28,6 +28,8 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- Bootstrap 4 RTL -->
   <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
+   <!-- DataTables -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
   <!-- Custom style for RTL -->
   <link rel="stylesheet" href="{{ asset('assets/dashboard/dist/css/custom.css') }}">
 
@@ -55,7 +57,7 @@
     <ul class="navbar-nav mr-auto-navbav">
       <!-- Messages Dropdown Menu -->
     <li class="nav-item dropdown">
-    <a class="btn btn-sm btn-danger" data-toggle="dropdown" href="{{ route('logout') }}">
+    <a class="btn btn-sm btn-danger" href="{{ route('logout') }}">
     تسجيل خروج
     </a>
 
@@ -342,5 +344,10 @@
 <script src="{{ asset('assets/dashboard/dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('assets/dashboard/dist/js/demo.js') }}"></script>
+
+<!-- DataTables -->
+<script src="{{ asset('assets/dashboard/plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('assets/dashboard/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+
 </body>
 </html>
