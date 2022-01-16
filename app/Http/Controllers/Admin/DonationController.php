@@ -24,13 +24,15 @@ class DonationController extends Controller
     public function index()
     {
         // $test = $this->database->getReference($this->database_table)->getValue();
+
         $donations = $this->firestore->database()->collection('donations')->documents();
+
 
         $users = $this->firestore->database()->collection('users')->documents();
 
         return view('admin.donations.index',[
             'donations' => $donations,
-            'users' => $users,
+            'users'     => $users,
         ]);
     }
 
@@ -143,7 +145,7 @@ class DonationController extends Controller
          ['path' => 'name', 'value' => $request->name],
         //  ['path' => 'pickupAddress', 'value' => $request->pickupAddress],
          ['path' => 'pickupAddress', 'value' => $request->pickupAddress],
-        //  ['path' => 'delivery_user', 'value' => $request->delivery_user],
+         ['path' => 'delivery_user', 'value' => $request->delivery_user],
          ['path' => 'status', 'value' => $request->status],
         ]);
 

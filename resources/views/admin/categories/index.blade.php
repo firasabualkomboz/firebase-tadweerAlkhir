@@ -40,7 +40,7 @@
     </div>
 
     <div class="card-body table-responsive p-0">
-    <table class="table table-hover">
+    <table class="table table-hover table-bordered table-striped" id="example1">
 
     <thead>
     <tr>

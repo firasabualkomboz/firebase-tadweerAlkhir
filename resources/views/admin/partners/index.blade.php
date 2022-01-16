@@ -25,39 +25,37 @@
 
 
 <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title"> <a class="btn btn-primary" href="{{ route('partners.create') }}">إضافة شريك جديد</a> </h3>
+<div class="col-12">
+<div class="card">
+<div class="card-header">
+<h3 class="card-title"> <a class="btn btn-primary" href="{{ route('partners.create') }}">إضافة شريك جديد</a> </h3>
 
-    <div class="card-tools">
-    <div class="input-group input-group-sm" style="width: 150px;">
-    <input type="text" name="table_search" class="form-control float-right" placeholder="بحث">
+<div class="card-tools">
+<div class="input-group input-group-sm" style="width: 150px;">
+<input type="text" name="table_search" class="form-control float-right" placeholder="بحث">
 
-    <div class="input-group-append">
-    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-    </div>
-    </div>
-    </div>
-    </div>
+<div class="input-group-append">
+<button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+</div>
+</div>
+</div>
+</div>
 
-    <div class="card-body table-responsive p-0">
-    <table class="table table-hover">
+<div class="card-body table-responsive p-0">
+<table id="example1" class="table table-hover table-bordered table-striped">
 
-    <thead>
-    <tr>
-    <th>الرقم</th>
-    <th>الأسم</th>
-    <th>الصورة </th>
-    <th>اكشن</th>
-    </tr>
-    </thead>
+<thead>
+<tr>
+<th>الرقم</th>
+<th>الأسم</th>
+<th>الصورة </th>
+<th>اكشن</th>
+</tr>
+</thead>
 
-    <tbody>
-    <tr>
-
-
+<tbody>
 @foreach ($partners as $key => $partner)
+<tr>
 
 <tr>
 <td>{{ $loop->index }}</td>
@@ -65,49 +63,47 @@
 <td><img src="{{ $partner['image'] ??'' }}" height="60" alt="image"></td>
 
 <td>
-    <button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#update{{ $partner->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
-        تعديل
-        </button>
+<button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#update{{ $partner->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
+تعديل
+</button>
 
 <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#delete{{ $partner->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
 حذف
 </button>
 
 </td>
-</tr>
-
 
 
 <!-- Update -->
 
 <div class="modal fade bd-example-modal-lg" id="update{{ $partner->id() }}"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-    <div class="modal-header">
-    <h5 class="modal-title">تعديل بيانات الشريك</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-    </button>
-    </div>
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">تعديل بيانات الشريك</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
 
-    <div class="modal-body pl-4">
+<div class="modal-body pl-4">
 
-    {!! Form::model($partner->data(), ['method'=>'PATCH', 'action'=> ['Admin\PartnerController@update', $partner->id()] ]) !!}
-    <div class="form-group">
-    {!! Form::label('Name', 'الوصف') !!}
-    {!! Form::text('description', null, ['class'=>'form-control'])!!}
-    </div>
+{!! Form::model($partner->data(), ['method'=>'PATCH', 'action'=> ['Admin\PartnerController@update', $partner->id()] ]) !!}
+<div class="form-group">
+{!! Form::label('Name', 'الوصف') !!}
+{!! Form::text('description', null, ['class'=>'form-control'])!!}
+</div>
 
-    </div>
+</div>
 
-    <div class="modal-footer">
-    {!! Form::submit('حفظ التعديلات', ['class'=>'btn btn-success']) !!}
-    {!! Form::close() !!}
-    <button type="button" class="btn btn-danger" data-dismiss="modal">تراجع</button>
-    </div>
-    </div>
-    </div>
-    </div>
+<div class="modal-footer">
+{!! Form::submit('حفظ التعديلات', ['class'=>'btn btn-success']) !!}
+{!! Form::close() !!}
+<button type="button" class="btn btn-danger" data-dismiss="modal">تراجع</button>
+</div>
+</div>
+</div>
+</div>
 
 
 

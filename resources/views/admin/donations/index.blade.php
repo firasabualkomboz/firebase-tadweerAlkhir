@@ -12,6 +12,7 @@
 <ol class="breadcrumb float-sm-right">
 <li class="breadcrumb-item"><a href="#">الرئيسية</a></li>
 <li class="breadcrumb-item active">الطلبات</li>
+
 </ol>
 </div>
 </div>
@@ -19,6 +20,8 @@
 </div>
 
 @endsection
+
+
 @section('content')
 
 
@@ -43,6 +46,7 @@
             <th>اسم المستخدم</th>
             <th>رقم التواصل</th>
             <th>حالة الطلب</th>
+            <th>الموقع</th>
             <th>اكشن</th>
             </tr>
             </thead>
@@ -51,24 +55,33 @@
             <tr>
             <td>{{ $loop->index }}</td>
 
-            <td>{{ $donation['userId'] ?? '' }}</td>
             <td>{{ $donation['userId']['name'] ?? '' }}</td>
-            <td style="color: green">{{ $donation['status'] ?? '' }}</td>
-                <td>
-                <button class="btn btn-sm btn-secondary" type="button" data-toggle="modal" data-target="#details{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="details">
-                تفاصيل أكثر
-                </button>
+            <td>{{ $donation->$key['name'] ?? '' }}</td>
+            <td>
+                <input type="text" name="pickupAddress" value="{{ $donation['pickupAddress'] ?? '' }}" id="pac-input" class="form-control mb-2" >
+                <div id="map" class="mt-3" name="pickupAddress" style="height: 300px;width: 250px;"></div>
+            </td>
+            <td>
+            @if( $donation['status'] == 'Awaiting Pickup')  <span class="btn btn-sm btn-outline-danger">قيد التسليم </span>
+            @else  <span class="btn btn-sm btn-outline-success">تم التسليم </span>
+            @endif
+            </td>
+
+            <td>
+            <button class="btn btn-sm btn-secondary" type="button" data-toggle="modal" data-target="#details{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="details">
+            تفاصيل أكثر
+            </button>
 
 
-                <button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#update{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
-                تعديل
-                </button>
+            <button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#update{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
+            تعديل
+            </button>
 
-                <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#delete{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
-                حذف
-                </button>
+            <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#delete{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
+            حذف
+            </button>
 
-                </td>
+            </td>
 
 
 
@@ -172,17 +185,19 @@ type="video/mp4">
 
     <div class="form-group">
     {!! Form::label('Name', 'سائق الطلب') !!}
+    <select name="delivery_user" class="form-control">
+    <option> السائق </option>
+    @foreach ($users as $user)
+    <option value="{{ $user['name'] }}" >
+    {{ $user['name'] }}
+    </option>
 
-    <select class="form-control form-control-lg" name="delivery_user">
-    @foreach($users as $key=> $user)
-    <option name="delivery_user" value="{{$user['name'] ?? ''}}">{{$user['name'] ?? ''}}</option>
     @endforeach
     </select>
 
 
-
-
     </div>
+
 
     <div class="form-group">
     {!! Form::label('Name', 'الموقع الجغرافي') !!}
@@ -190,15 +205,26 @@ type="video/mp4">
     <div id="map" class="mt-3" name="pickupAddress" style="height: 300px;width: 750px;"></div>
     </div>
 
-    {!! Form::label('Name', 'حالة التبرع') !!}
+    <div class="form-group">
+    <label for="">حالة الطلب</label>
 
-    <div class="form-group form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="status" checked="checked" id="inlineRadio3" value="Awaiting Pickup">
-    <label class="form-check-label" for="inlineRadio3">قيد التسليم</label>
+    <div class="form-check">
+    <input class="form-check-input" type="radio" name="status" value="Awaiting Pickup" @if (old('status' , $donation['status'] ) == 'Awaiting Pickup') checked @endif>
+    <label class="form-check-label mr-3" >
+    قيد التسليم
 
-    <input class="form-check-input" type="radio" name="status" id="inlineRadio2" value="delivered">
-    <label class="form-check-label" for="inlineRadio2">تم التسليم</label>
+    </label>
     </div>
+    <div class="form-check">
+    <input class="form-check-input" type="radio" name="status" value="delivered" @if (old('status', $donation['status'] ) == 'delivered') checked @endif>
+    <label class="form-check-label mr-3" >
+    تم التسليم
+    </label>
+    </div>
+
+
+    </div>
+
 
     </div>
 
@@ -206,6 +232,9 @@ type="video/mp4">
     {!! Form::submit('حفظ التعديلات', ['class'=>'btn btn-success']) !!}
     {!! Form::close() !!}
     <button type="button" class="btn btn-danger" data-dismiss="modal">تراجع</button>
+
+
+
 </div>
 </div>
 </div>
@@ -254,7 +283,6 @@ type="video/mp4">
 </div>
 </div>
 <!-- /.row -->
-
 
 
 
@@ -437,23 +465,7 @@ type="video/mp4">
     }
 </script>
 
-<script>
 
-$(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-
-    });
-
-  });
-
-</script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBS_WLni5YfR2VHwzTzf50iFsb4hmv9Vw8&libraries=places&callback=initAutocomplete&language=ar&region=SA
 async defer"></script>
 

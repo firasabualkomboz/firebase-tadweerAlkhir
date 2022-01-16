@@ -29,8 +29,6 @@
 
     <div class="card-tools">
     <div class="input-group input-group-sm" style="width: 150px;">
-    <input type="text" name="table_search" class="form-control float-right" placeholder="بحث">
-
     <div class="input-group-append">
     <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
     </div>
@@ -38,8 +36,9 @@
     </div>
     </div>
 
-    <div class="card-body table-responsive p-0">
-    <table class="table table-hover">
+
+    <div class="card-body table-responsive p-0 mt-4">
+        <table id="example1" class="table table-bordered table-striped">
 
     <thead>
     <tr>
@@ -58,9 +57,6 @@
     </thead>
 
     <tbody>
-    <tr>
-
-
 @foreach ($users as $key => $user)
 
 
@@ -89,8 +85,6 @@
 </button> --}}
 
 </td>
-</tr>
-
 
 <!-- Update -->
 <div class="modal fade bd-example-modal-lg" id="update{{ $user->id() }}"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
