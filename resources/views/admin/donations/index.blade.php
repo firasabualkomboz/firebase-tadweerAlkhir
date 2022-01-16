@@ -46,7 +46,6 @@
             <th>اسم المستخدم</th>
             <th>رقم التواصل</th>
             <th>حالة الطلب</th>
-            <th>الموقع</th>
             <th>اكشن</th>
             </tr>
             </thead>
@@ -57,10 +56,6 @@
 
             <td>{{ $donation['userId']['name'] ?? '' }}</td>
             <td>{{ $donation->$key['name'] ?? '' }}</td>
-            <td>
-                <input type="text" name="pickupAddress" value="{{ $donation['pickupAddress'] ?? '' }}" id="pac-input" class="form-control mb-2" >
-                <div id="map" class="mt-3" name="pickupAddress" style="height: 300px;width: 250px;"></div>
-            </td>
             <td>
             @if( $donation['status'] == 'Awaiting Pickup')  <span class="btn btn-sm btn-outline-danger">قيد التسليم </span>
             @else  <span class="btn btn-sm btn-outline-success">تم التسليم </span>
@@ -76,6 +71,9 @@
             <button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#update{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
             تعديل
             </button>
+            <a class="btn btn-sm btn-warning" target="_black" href="{{ route('donations.edit' , $key) }}"><i class="fa fa-edit"> Edit </i></a> -
+
+
 
             <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#delete{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
             حذف

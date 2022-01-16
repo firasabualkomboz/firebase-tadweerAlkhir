@@ -1,16 +1,44 @@
 <div class="card-body">
 
-    <div class="form-group">
-    <label>الأسم</label>
-    <input type="text" name="name" class="form-control">
+    {{-- <div class="form-group">
+    {!! Form::label('Name', 'سائق الطلب') !!}
+    <select name="delivery_user" class="form-control">
+    <option> السائق </option>
+    @foreach ($users as $user)
+    <option value="{{ $user['name'] }}" >
+    {{ $user['name'] }}
+    </option>
+
+    @endforeach
+    </select>
+
+    </div> --}}
+
+    {{-- <div class="form-group">
+    <label for="">حالة الطلب</label>
+
+    <div class="form-check">
+    <input class="form-check-input" type="radio" name="status" value="Awaiting Pickup" @if (old('status' , $donation['status'] ) == 'Awaiting Pickup') checked @endif>
+    <label class="form-check-label mr-3" >
+    قيد التسليم
+
+    </label>
+    </div>
+    <div class="form-check">
+    <input class="form-check-input" type="radio" name="status" value="delivered" @if (old('status', $donation['status'] ) == 'delivered') checked @endif>
+    <label class="form-check-label mr-3" >
+    تم التسليم
+    </label>
     </div>
 
-
+    </div> --}}
 
     <div class="form-group">
     <label>الموقع</label>
-    <input type="text" name="location" id="pac-input" class="form-control" >
-    <div id="map" class="mt-3" style="height: 500px;width: 550px;"></div>
+    {{ $edit_data['pickupAddress'] ?? 'no value '}}
+    {{ $edit_data['category'] ?? 'no value '}}
+    <input type="text" name="pickupAddress" value="{{ $edit_data['pickupAddress'] ?? ''}}" id="pac-input" class="form-control" >
+    <div id="map" class="mt-5" style="height: 500px;width: 550px;"></div>
     </div>
 
 
@@ -18,8 +46,6 @@
 
 
     @section('script')
-
-
     <script>
         $("#pac-input").focusin(function() {
             $(this).val('');
@@ -205,7 +231,6 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBS_WLni5YfR2VHwzTzf50iFsb4hmv9Vw8&libraries=places&callback=initAutocomplete&language=ar&region=SA
     async defer"></script>
-
-        @stop
+    @stop
 
 </div>

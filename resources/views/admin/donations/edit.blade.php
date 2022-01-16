@@ -29,10 +29,11 @@
 
 <!-- form start -->
 
-<form role="form" class="" action="{{ route('donations.update') }}" method="post">
+<form class="" action="{{ route('donations.update' , $key) }}" method="PUT">
 @csrf
 @include('admin.donations._form')
 </form>
+
 
 </div>
 <!-- /.card -->
