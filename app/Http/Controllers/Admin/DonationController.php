@@ -127,18 +127,24 @@ class DonationController extends Controller
      */
     public function edit($id)
     {
-        $key = $id;
-        $edit_data = $this->database->getReference($this->database_table)->getChild($key)->getValue();
-        if($edit_data){
-            return true;
-            die();
-            return view('admin.donations.edit',[
-                'key' => $key,
-                'edit_data' => $edit_data,
-            ]);
-        }else{
-            toastr()->error('يوجد خطأ في المعرف');
-        }
+
+        // $key = $id;
+        // $edit_data = $this->database->getReference($this->database_table)->getChild($key)->getValue();
+        // if($edit_data){
+        //     return view('admin.donations.edit',[
+        //         'key' => $key,
+        //         'edit_data' => $edit_data,
+        //     ]);
+        // }else{
+        //     toastr()->error('يوجد خطأ في المعرف');
+        // }
+        $users = $this->firestore->database()->collection('users')->documents();
+        $docRef = $this->firestore->database()->collection('donations')->document($id);
+        $snapshot = $docRef->snapshot();
+        $donation = $snapshot;
+
+        return view('admin.donations.edit', compact('donation','users'));
+
     }
 
     /**
@@ -150,17 +156,33 @@ class DonationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $key = $id;
-        $update_data = [
-        'pickupAddress' => $request->pickupAddress,
-        ];
-        $dataRef  = $this->database->getReference($this->database_table .'/'. $key)->update($update_data);
-        if($dataRef){
-            toastr()->success('تم تحديث الفئة بنجاح');
-            return redirect()->route('donations.index');
-        }else{
-        return "no false";
-        }
+
+        $docRef = $this->firestore->database()->collection('donations')->document($id);
+        $snapshot = $docRef->snapshot();
+        $user = $snapshot;
+        $docRef->set([
+          'delivery_user'   => $request->delivery_user,
+          'pickupAddress'   => $request->pickupAddress,
+          'status'          => $request->status,
+
+        ]);
+
+        toastr()->success('تم تحديث بيانات الطلب بنجاح');
+        return redirect()->route('donations.index');
+
+        // $key = $id;
+        // $update_data = [
+        // 'pickupAddress' => $request->pickupAddress,
+        // ];
+        // $dataRef  = $this->database->getReference($this->database_table .'/'. $key)->update($update_data);
+        // if($dataRef){
+        //     toastr()->success('تم تحديث الفئة بنجاح');
+        //     return redirect()->route('donations.index');
+        // }else{
+        // return "no false";
+        // }
+
+
         // $donation = $this->firestore->database()->collection('donations')->document($id)
         // ->update([
         //  ['path' => 'name', 'value' => $request->name],
@@ -173,20 +195,7 @@ class DonationController extends Controller
         // toastr()->success('تم تحديث طلب التبرع بنجاح');
         // return back();
     }
-    public function updateLocation(Request $request , $id)
-    {
-        $key = $id;
-        $update_data = [
-        'pickupAddress' => $request->pickupAddress,
-        ];
-        $dataRef  = $this->database->getReference($this->database_table .'/'. $key)->update($update_data);
-        if($dataRef){
-            toastr()->success('تم تحديث الفئة بنجاح');
-            return redirect()->route('donations.index');
-        }else{
-        return "no false";
-        }
-    }
+
     /**
      * Remove the specified resource from storage.
      *

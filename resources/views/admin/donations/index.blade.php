@@ -46,6 +46,7 @@
             <th>اسم المستخدم</th>
             <th>رقم التواصل</th>
             <th>حالة الطلب</th>
+            <th>test location </th>
             <th>اكشن</th>
             </tr>
             </thead>
@@ -56,6 +57,8 @@
 
             <td>{{ $donation['userId']['name'] ?? '' }}</td>
             <td>{{ $donation->$key['name'] ?? '' }}</td>
+            <td>
+
             <td>
             @if( $donation['status'] == 'Awaiting Pickup')  <span class="btn btn-sm btn-outline-danger">قيد التسليم </span>
             @else  <span class="btn btn-sm btn-outline-success">تم التسليم </span>
@@ -68,10 +71,12 @@
             </button>
 
 
-            <button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#update{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
+            {{-- <button class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#update{{ $donation->id() }}" data-toggle="tooltip" data-placement="left" title="Edit">
             تعديل
-            </button>
-            <a class="btn btn-sm btn-warning" target="_black" href="{{ route('donations.edit' , $key) }}"><i class="fa fa-edit"> Edit </i></a> -
+            </button> --}}
+
+            {{-- <a class="btn btn-sm btn-black" href="{{ route('donations.edit' , $key) }}"> تعديل تجريبي </a> --}}
+            <a class="btn btn-sm btn-warning" href="{{ route('donations.edit' ,  $donation->id()  ) }}"> تعديل الطلب </a>
 
 
 
@@ -282,6 +287,24 @@ type="video/mp4">
 </div>
 <!-- /.row -->
 
+@foreach ($donations  as $donation)
+<iframe src={{ $donation[''] }} width=”100%” height=”100%” frameborder=”0” style=”border:0” allowfullscreen></iframe>
+<script>
+
+    function initMap() {
+
+      var macc = {lat: 42.1382114, lng: -71.5212585};
+
+      var map = new google.maps.Map(
+
+          document.getElementById('map'), {zoom: 15, center: macc});
+
+      var marker = new google.maps.Marker({position: macc, map: map});
+
+    }
+
+ </script>
+@endforeach
 
 
 @section('script')
@@ -467,6 +490,9 @@ type="video/mp4">
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBS_WLni5YfR2VHwzTzf50iFsb4hmv9Vw8&libraries=places&callback=initAutocomplete&language=ar&region=SA
 async defer"></script>
 
+
+
+</td>
 
 @endsection
 

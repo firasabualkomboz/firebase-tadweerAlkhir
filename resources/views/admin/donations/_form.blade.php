@@ -1,20 +1,18 @@
 <div class="card-body">
 
-    {{-- <div class="form-group">
+    <div class="form-group">
     {!! Form::label('Name', 'سائق الطلب') !!}
     <select name="delivery_user" class="form-control">
     <option> السائق </option>
     @foreach ($users as $user)
-    <option value="{{ $user['name'] }}" >
-    {{ $user['name'] }}
-    </option>
-
+    <option value="{{ $user['name'] }}">{{ $user['name'] }}</option>
     @endforeach
     </select>
 
-    </div> --}}
+    </div>
 
-    {{-- <div class="form-group">
+
+    <div class="form-group">
     <label for="">حالة الطلب</label>
 
     <div class="form-check">
@@ -31,13 +29,15 @@
     </label>
     </div>
 
-    </div> --}}
+    </div>
 
     <div class="form-group">
     <label>الموقع</label>
-    {{ $edit_data['pickupAddress'] ?? 'no value '}}
-    {{ $edit_data['category'] ?? 'no value '}}
-    <input type="text" name="pickupAddress" value="{{ $edit_data['pickupAddress'] ?? ''}}" id="pac-input" class="form-control" >
+    <br>
+    <small> الموقع الحالي للطلب : </small>
+    <small>{{ $donation['pickupAddress']  ?? 'لم يتم تحديد أي موقع بعد '}}</small>
+
+    <input type="text" name="pickupAddress" value="{{ $donation['pickupAddress'] ?? ''}}" id="pac-input" class="form-control" >
     <div id="map" class="mt-5" style="height: 500px;width: 550px;"></div>
     </div>
 

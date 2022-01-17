@@ -1,6 +1,4 @@
-
 @extends('layouts.admin')
-
 @section('content-header')
 <div class="content-header">
 <div class="container-fluid">
@@ -29,8 +27,9 @@
 
 <!-- form start -->
 
-<form class="" action="{{ route('donations.update' , $key) }}" method="PUT">
-@csrf
+<form class="" action="{{ route('donations.update' , $donation->id()) }}" method="post">
+{{ csrf_field() }}
+{{ method_field('PUT') }}
 @include('admin.donations._form')
 </form>
 

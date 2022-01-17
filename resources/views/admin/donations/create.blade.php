@@ -5,9 +5,6 @@
 @section('content')
 
 
-
-
-
 <div class="content-wrapper">
     <section class="content-header">
       <h1>All Donations</h1>
