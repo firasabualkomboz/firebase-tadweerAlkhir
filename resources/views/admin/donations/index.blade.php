@@ -131,10 +131,16 @@ type="video/mp4">
 <h6>العنوان</h6>
 <hr>
 
-<form action="http://maps.google.com/maps" method="get" target="_blank">
+{{-- <form action="http://maps.google.com/maps" method="get" target="_blank">
     <input type="hidden" name="daddr" value="{{$donation['pickupAddress'] ?? '' }}" />
     <input type="submit" class="btn btn-sm btn-success" value="اذهب للعنوان عبر خرائط جوجل" />
- </form>
+ </form> --}}
+
+ <p> {{ $donation['latitude'] ?? 'ملاحظة : لم يتم تحديد الموقع لهذا الطلب بعد ' }}  </p>
+<a href="https://maps.google.com/?q= {{ $donation['latitude'] ?? '' }} {{ $donation['longitude']  ?? ''}} ">
+اذهب للموقع
+</a>
+
 
 </div>
 <div class="col-lg-4 p-2 text-center" style="background: #f8f8f8; border: solid 1px #000;">
@@ -287,24 +293,6 @@ type="video/mp4">
 </div>
 <!-- /.row -->
 
-@foreach ($donations  as $donation)
-<iframe src={{ $donation[''] }} width=”100%” height=”100%” frameborder=”0” style=”border:0” allowfullscreen></iframe>
-<script>
-
-    function initMap() {
-
-      var macc = {lat: 42.1382114, lng: -71.5212585};
-
-      var map = new google.maps.Map(
-
-          document.getElementById('map'), {zoom: 15, center: macc});
-
-      var marker = new google.maps.Marker({position: macc, map: map});
-
-    }
-
- </script>
-@endforeach
 
 
 @section('script')
