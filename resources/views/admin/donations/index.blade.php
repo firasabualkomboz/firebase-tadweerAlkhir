@@ -130,7 +130,7 @@ type="video/mp4">
 <div class="col-lg-4 p-2 text-center" style="background: #f8f8f8; border: solid 1px #000;">
 <h6>العنوان</h6>
 <hr>
-
+<br>
 {{-- <form action="http://maps.google.com/maps" method="get" target="_blank">
     <input type="hidden" name="daddr" value="{{$donation['pickupAddress'] ?? '' }}" />
     <input type="submit" class="btn btn-sm btn-success" value="اذهب للعنوان عبر خرائط جوجل" />
