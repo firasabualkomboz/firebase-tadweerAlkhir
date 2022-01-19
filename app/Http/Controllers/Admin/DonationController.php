@@ -157,18 +157,17 @@ class DonationController extends Controller
     public function update(Request $request, $id)
     {
 
-        $docRef = $this->firestore->database()->collection('donations')->document($id);
-        $snapshot = $docRef->snapshot();
-        $user = $snapshot;
-        $docRef->set([
-          'delivery_user'   => $request->delivery_user,
-          'pickupAddress'   => $request->pickupAddress,
-          'status'          => $request->status,
+        // $docRef = $this->firestore->database()->collection('donations')->document($id);
+        // $snapshot = $docRef->snapshot();
+        // $user = $snapshot;
+        // $docRef->set([
+        //   'delivery_user'   => $request->delivery_user,
+        //   'pickupAddress'   => $request->pickupAddress,
+        //   'status'          => $request->status,
+        // ]);
 
-        ]);
-
-        toastr()->success('تم تحديث بيانات الطلب بنجاح');
-        return redirect()->route('donations.index');
+        // toastr()->success('تم تحديث بيانات الطلب بنجاح');
+        // return redirect()->route('donations.index');
 
         // $key = $id;
         // $update_data = [
@@ -183,17 +182,17 @@ class DonationController extends Controller
         // }
 
 
-        // $donation = $this->firestore->database()->collection('donations')->document($id)
-        // ->update([
-        //  ['path' => 'name', 'value' => $request->name],
-        // //  ['path' => 'pickupAddress', 'value' => $request->pickupAddress],
-        //  ['path' => 'pickupAddress', 'value' => $request->pickupAddress],
-        //  ['path' => 'delivery_user', 'value' => $request->delivery_user],
-        //  ['path' => 'status', 'value' => $request->status],
-        // ]);
+        $donation = $this->firestore->database()->collection('donations')->document($id)
+        ->update([
+         ['path' => 'pickupAddress', 'value' => $request->pickupAddress],
+         ['path' => 'delivery_user', 'value' => $request->delivery_user],
+         ['path' => 'status', 'value' => $request->status],
+         ['path' => 'latitude', 'value' => $request->latitude],
+         ['path' => 'longitude', 'value' => $request->longitude],
+        ]);
 
-        // toastr()->success('تم تحديث طلب التبرع بنجاح');
-        // return back();
+        toastr()->success('تم تحديث طلب التبرع بنجاح');
+        return redirect()->route('donations.index');
     }
 
     /**

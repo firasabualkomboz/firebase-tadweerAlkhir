@@ -46,7 +46,6 @@
             <th>اسم المستخدم</th>
             <th>رقم التواصل</th>
             <th>حالة الطلب</th>
-            <th>test location </th>
             <th>اكشن</th>
             </tr>
             </thead>
@@ -57,7 +56,6 @@
 
             <td>{{ $donation['userId']['name'] ?? '' }}</td>
             <td>{{ $donation->$key['name'] ?? '' }}</td>
-            <td>
 
             <td>
             @if( $donation['status'] == 'Awaiting Pickup')  <span class="btn btn-sm btn-outline-danger">قيد التسليم </span>
@@ -130,7 +128,7 @@ type="video/mp4">
 <div class="col-lg-4 p-2 text-center" style="background: #f8f8f8; border: solid 1px #000;">
 <h6>العنوان</h6>
 <hr>
-<br>
+
 {{-- <form action="http://maps.google.com/maps" method="get" target="_blank">
     <input type="hidden" name="daddr" value="{{$donation['pickupAddress'] ?? '' }}" />
     <input type="submit" class="btn btn-sm btn-success" value="اذهب للعنوان عبر خرائط جوجل" />

@@ -36,8 +36,10 @@
     <br>
     <small> الموقع الحالي للطلب : </small>
     <small>{{ $donation['pickupAddress']  ?? 'لم يتم تحديد أي موقع بعد '}}</small>
+    <input id="latitude" type="hidden" name="latitude" value=""  class="form-control" >
+    <input id="longitude" type="hidden" name="longitude" value=""  class="form-control" >
 
-    <input type="text" name="pickupAddress" value="{{ $donation['pickupAddress'] ?? ''}}" id="pac-input" class="form-control" >
+    <input type="text" name="pickupAddress" value="" id="pac-input" class="form-control" >
     <div id="map" class="mt-5" style="height: 500px;width: 550px;"></div>
     </div>
 
